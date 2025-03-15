@@ -1,28 +1,23 @@
-import React, { useState,useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// Configure axios base URL
-axios.defaults.baseURL = 'https://lamback.onrender.com';
+import { useParams } from 'react-router-dom';
 
 const Documentation = () => {
-  const { technology, topicId } = useParams();
-  const navigate = useNavigate();
   const [technologies, setTechnologies] = useState([]);
-  const [selectedTechnology, setSelectedTechnology] = useState(null);
+  const [selectedTech, setSelectedTech] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { techSlug, topicSlug } = useParams();
 
   useEffect(() => {
     const fetchTechnologies = async () => {
       try {
-        const response = await axios.get('/api/documentation/technologies');
-        setTechnologies(Array.isArray(response.data) ? response.data : []);
+        const response = await axios.get('https://lamback.onrender.com/api/documentation/technologies');
+        setTechnologies(response.data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load technologies');
+        setError('Failed to fetch technologies');
         setLoading(false);
       }
     };
@@ -31,27 +26,75 @@ const Documentation = () => {
   }, []);
 
   useEffect(() => {
-    const fetchTechnologyData = async () => {
-      if (!technology) return;
-
-      try {
-        const response = await axios.get(`/api/documentation/technologies/${technology}`);
-        setSelectedTechnology(response.data);
-
-        if (topicId) {
-          const topic = response.data.topics.find(t => t.slug === topicId);
-          setSelectedTopic(topic || null);
-        } else if (response.data.topics.length > 0) {
-          setSelectedTopic(response.data.topics[0]);
-          navigate(`/documentation/${technology}/${response.data.topics[0].slug}`);
+    if (techSlug) {
+      const fetchTechnology = async () => {
+        try {
+          const response = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}`);
+          setSelectedTech(response.data);
+        } catch (err) {
+          setError('Failed to fetch technology details');
         }
-      } catch (err) {
-        setError('Failed to load technology data');
-      }
-    };
+      };
+      fetchTechnology();
+    }
+  }, [techSlug]);
 
-    fetchTechnologyData();
-  }, [technology, topicId, navigate]);
+  useEffect(() => {
+    if (techSlug && topicSlug) {
+      const fetchTopic = async () => {
+        try {
+          const response = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
+          if (response.data && response.data.content) {
+            setSelectedTopic(response.data);
+            console.log(response.data.content);
+          } else {
+            setError('Topic content not found');
+          }
+        } catch (err) {
+          console.error('Error fetching topic:', err);
+          setError('Failed to fetch topic details');
+        }
+      };
+      fetchTopic();
+    }
+  }, [techSlug, topicSlug]);
+
+  const renderContentBlock = (block) => {
+    switch (block.type) {
+      case 'heading':
+        const HeadingTag = `h${block.metadata.level || 2}`;
+        return <HeadingTag className="text-2xl font-bold mb-4 text-left">{block.content}</HeadingTag>;
+      
+      case 'text':
+        return <p className="text-gray-600 mb-4 leading-relaxed text-left">{block.content}</p>;
+      
+      case 'code':
+        return (
+          <pre className="bg-gray-900 rounded-lg mb-4 overflow-x-auto text-left">
+            <code className={`language-${block.metadata.language} block p-4 text-gray-100`}>{block.content}</code>
+          </pre>
+        );
+      
+      case 'image':
+        return (
+          <figure className="mb-4">
+            <img 
+              src={block.content} 
+              alt={block.metadata.alt || ''} 
+              className="max-w-full rounded-lg shadow-lg"
+            />
+            {block.metadata.caption && (
+              <figcaption className="text-sm text-gray-500 mt-2">
+                {block.metadata.caption}
+              </figcaption>
+            )}
+          </figure>
+        );
+      
+      default:
+        return null;
+    }
+  };
 
   if (loading) {
     return (
@@ -71,60 +114,83 @@ const Documentation = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
-          <div className="lg:w-64 bg-white shadow-lg rounded-lg p-6 h-fit">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Technologies</h2>
-            <nav className="space-y-2">
-              {technologies.map((tech) => (
-                <Link
-                  key={tech.slug}
-                  to={`/documentation/${tech.slug}`}
-                  className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${technology === tech.slug ? 'bg-indigo-100 text-indigo-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
-                >
-                  {tech.name}
-                </Link>
-              ))}
+          <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-4">Technologies</h2>
+            <nav>
+              <ul className="space-y-2">
+                {technologies.map((tech) => (
+                  <li key={tech.slug}>
+                    <button
+                      onClick={() => setSelectedTech(tech)}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedTech?.slug === tech.slug ? 'bg-indigo-50 text-indigo-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    >
+                      {tech.name}
+                    </button>
+                    {selectedTech?.slug === tech.slug && (
+                      <ul className="ml-4 mt-2 space-y-1">
+                        {tech.topics.map((topic) => (
+                          <li key={topic.slug}>
+                            <button
+                              onClick={() => setSelectedTopic(topic)}
+                              className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedTopic?.slug === topic.slug ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50'}`}
+                            >
+                              {topic.title}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </nav>
           </div>
 
           {/* Main Content */}
-          <div className="flex-1">
-            {selectedTechnology ? (
-              <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div className="p-6">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-4">{selectedTechnology.name}</h1>
-                  <p className="text-gray-600 mb-6">{selectedTechnology.description}</p>
-
-                  {/* Topics Navigation */}
-                  <div className="border-t border-b border-gray-200 py-4 mb-6">
-                    <div className="flex gap-4 overflow-x-auto">
-                      {selectedTechnology.topics.map((topic) => (
-                        <Link
-                          key={topic.slug}
-                          to={`/documentation/${technology}/${topic.slug}`}
-                          className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap ${selectedTopic?.slug === topic.slug ? 'bg-indigo-100 text-indigo-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
-                        >
-                          {topic.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Topic Content */}
-                  {selectedTopic && (
-                    <div className="prose max-w-none">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-4">{selectedTopic.title}</h2>
-                      <div className="text-gray-600">{selectedTopic.content}</div>
-                    </div>
-                  )}
+          <div className="lg:col-span-3">
+            {selectedTopic ? ( 
+              <div className="bg-white p-8 rounded-lg shadow-md">
+                <h1 className="text-3xl font-bold mb-6">{selectedTopic.title} hello</h1>
+                <div className="prose max-w-none">
+                  {selectedTopic.content && selectedTopic.content.map((block, index) => (
+                    <div key={index}>{renderContentBlock(block)}</div>
+                  ))}
+                </div>
+              </div>
+            ) : selectedTech ? (
+              <div className="bg-white p-8 rounded-lg shadow-md">
+                <h1 className="text-3xl font-bold mb-4">{selectedTech.name}</h1>
+                <p className="text-gray-600 mb-6">{selectedTech.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {selectedTech.topics.map((topic) => (
+                    <button
+                      key={topic.slug}
+                      onClick={() => setSelectedTopic(topic)}
+                      className="p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
+                    >
+                      <h3 className="text-xl font-semibold mb-2">{topic.title}</h3>
+                    </button>
+                  ))}
                 </div>
               </div>
             ) : (
-              <div className="bg-white shadow-lg rounded-lg p-6">
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Documentation</h1>
-                <p className="text-gray-600">Please select a technology from the sidebar to get started.</p>
+              <div className="bg-white p-8 rounded-lg shadow-md">
+                <p className="text-gray-600 mb-8">Select a technology from the sidebar to get started.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {technologies.map((tech) => (
+                    <button
+                      key={tech.slug}
+                      onClick={() => setSelectedTech(tech)}
+                      className="p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
+                    >
+                      <h3 className="text-xl font-semibold mb-2">{tech.name}</h3>
+                      <p className="text-gray-600 text-sm">{tech.description}</p>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>

@@ -18,6 +18,7 @@ import ProblemArchive from './components/coding/ProblemArchive';
 import ProblemSolving from './components/coding/ProblemSolving';
 import './App.css';
 import CompanyRequirementForm from './components/company/CompanyRequirementForm';
+import AddDocumentation from './components/documentation/AddDocumentation';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/documentation/:technology" element={<Documentation />} />
             <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
+            <Route path="/add-documentation" element={<AddDocumentation />} />
             <Route path="/interview" element={<ProtectedRoute allowedRoles={['student', 'admin']}><InterviewPrep /></ProtectedRoute>} />
             <Route path="/interview/:stackId/:level" element={<ProtectedRoute allowedRoles={['student', 'admin']}><QuizInterface /></ProtectedRoute>} />
             <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />

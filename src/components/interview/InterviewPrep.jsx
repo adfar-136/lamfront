@@ -11,7 +11,6 @@ const InterviewPrep = () => {
   useEffect(() => {
     const fetchTechStacks = async () => {
       try {
-        console.log('Fetching tech stacks...');
         const response = await fetch('https://lamback.onrender.com/api/techstack', {
           headers: {
             'Content-Type': 'application/json'
