@@ -44,7 +44,7 @@ function App() {
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/documentation/:technology" element={<Documentation />} />
             <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
-            <Route path="/add-documentation" element={<AddDocumentation />} />
+            <Route path="/adddoc" element={<AddDocumentation />} />
             <Route path="/interview" element={<ProtectedRoute allowedRoles={['student', 'admin']}><InterviewPrep /></ProtectedRoute>} />
             <Route path="/interview/:stackId/:level" element={<ProtectedRoute allowedRoles={['student', 'admin']}><QuizInterface /></ProtectedRoute>} />
             <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />

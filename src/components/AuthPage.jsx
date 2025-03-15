@@ -59,9 +59,9 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl w-full flex bg-white/95 rounded-xl shadow-2xl overflow-hidden relative min-h-[600px] border border-red-100 backdrop-blur-sm">
+      <div className="max-w-4xl w-full flex bg-white/95 rounded-xl shadow-2xl overflow-hidden relative min-h-[600px] border border-red-100 backdrop-blur-sm md:flex-row flex-col">
         {/* Form Section */}
-        <div className={`w-1/2 p-8 transition-all duration-500 ease-out absolute flex flex-col justify-center ${isLogin ? 'left-0' : '-left-full'} transform overflow-y-auto max-h-[600px]`}>
+        <div className={`md:w-1/2 w-full p-8 transition-all duration-500 ease-out md:absolute relative flex flex-col justify-center ${isLogin ? 'left-0' : 'md:-left-full'} transform overflow-y-auto max-h-[600px] ${!isLogin && 'hidden md:flex'}`}>
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-gray-900">
               {isLogin ? 'Sign in to Lamicons' : 'Create your account'}
@@ -161,7 +161,7 @@ const AuthPage = () => {
         </div>
 
         {/* Sign Up Form Section */}
-        <div className={`w-1/2 p-8 transition-all duration-500 ease-out absolute ${!isLogin ? 'right-0' : '-right-full'} transform overflow-y-auto max-h-[600px]`}>
+        <div className={`md:w-1/2 w-full p-8 transition-all duration-500 ease-out md:absolute relative ${!isLogin ? 'right-0' : 'md:-right-full'} transform overflow-y-auto max-h-[600px] ${isLogin && 'hidden md:flex'}`}>
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-gray-900">
               {!isLogin ? 'Create your account' : 'Sign in to Lamicons'}
