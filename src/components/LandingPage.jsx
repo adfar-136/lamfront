@@ -38,12 +38,8 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <div className="h-56 w-full sm:h-72 md:h-96 lg:w-full lg:h-full relative overflow-hidden">
-            <img
-              src="https://placehold.co/800x600/4F46E5/FFFFFF/png?text=Tech+Education"
-              alt="Tech Education Platform"
-              className="w-full h-full object-cover"
-            />
+          <div className="h-56 w-full sm:h-72 md:h-96 lg:w-full lg:h-full relative overflow-hidden rounded-bl-3xl shadow-2xl">
+            <img src="/landing.jpg" alt="Tech Education" className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500" />
           </div>
         </div>
       </div>

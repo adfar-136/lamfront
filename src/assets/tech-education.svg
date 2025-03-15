@@ -1,0 +1,53 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+      .floating { animation: float 6s ease-in-out infinite; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bgGradient)" rx="20" />
+  
+  <!-- Decorative circles -->
+  <circle cx="650" cy="100" r="80" fill="#6366F1" opacity="0.3" class="floating" />
+  <circle cx="150" cy="500" r="100" fill="#8B5CF6" opacity="0.3" class="floating" />
+  
+  <!-- Central illustration -->
+  <g transform="translate(400,300)" class="floating">
+    <!-- Monitor frame -->
+    <rect x="-150" y="-100" width="300" height="200" rx="10" fill="#F3F4F6" />
+    <rect x="-140" y="-90" width="280" height="180" rx="5" fill="#1F2937" />
+    
+    <!-- Code elements -->
+    <g fill="#6EE7B7">
+      <rect x="-120" y="-70" width="100" height="10" rx="2" opacity="0.8" />
+      <rect x="-120" y="-50" width="80" height="10" rx="2" opacity="0.6" />
+      <rect x="-120" y="-30" width="120" height="10" rx="2" opacity="0.8" />
+      <rect x="-120" y="-10" width="60" height="10" rx="2" opacity="0.6" />
+      <rect x="-120" y="10" width="90" height="10" rx="2" opacity="0.8" />
+      <rect x="-120" y="30" width="70" height="10" rx="2" opacity="0.6" />
+    </g>
+    
+    <!-- Floating elements -->
+    <g fill="#60A5FA">
+      <circle cx="80" cy="-50" r="15" opacity="0.8" />
+      <circle cx="50" cy="0" r="10" opacity="0.6" />
+      <circle cx="90" cy="30" r="12" opacity="0.7" />
+    </g>
+  </g>
+  
+  <!-- Text elements -->
+  <text x="400" y="500" font-family="Arial" font-size="24" fill="white" text-anchor="middle" class="floating">
+    Tech Education Reimagined
+  </text>
+</svg>
