@@ -91,6 +91,79 @@ const Documentation = () => {
           </figure>
         );
       
+      case 'table':
+        return (
+          <div className="overflow-x-auto mb-4 border border-gray-200 rounded-lg shadow">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                {JSON.parse(block.content).length > 0 && (
+                  <tr>
+                    {JSON.parse(block.content)[0].map((header, index) => (
+                      <th
+                        key={index}
+                        className="px-6 py-4 text-left text-sm font-bold text-gray-900 uppercase tracking-wider border-b-2 border-gray-200"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                )}
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100">
+                {JSON.parse(block.content).slice(1).map((row, rowIndex) => (
+                  <tr key={rowIndex} className="hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+                    {row.map((cell, cellIndex) => (
+                      <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700 border-r border-gray-100 last:border-r-0">
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      
+      case 'quote':
+        return (
+          <blockquote className="border-l-4 border-indigo-500 pl-4 mb-4 italic text-gray-600">
+            <p>{block.content}</p>
+            {block.metadata?.author && (
+              <footer className="text-sm text-gray-500 mt-2">— {block.metadata.author}</footer>
+            )}
+          </blockquote>
+        );
+      
+      case 'link':
+        return (
+          <a
+            href={block.metadata.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-indigo-600 hover:text-indigo-800 underline mb-4 inline-block"
+          >
+            {block.content}
+          </a>
+        );
+
+      case 'ordered-list':
+        return (
+          <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-600">
+            {block.content.split('\n').filter(item => item.trim() !== '').map((item, index) => (
+              <li key={index} className="text-left">{item.trim()}</li>
+            ))}
+          </ol>
+        );
+
+      case 'unordered-list':
+        return (
+          <ul className="list-disc list-inside mb-4 space-y-2 text-gray-600">
+            {block.content.split('\n').filter(item => item.trim() !== '').map((item, index) => (
+              <li key={index} className="text-left">{item.trim()}</li>
+            ))}
+          </ul>
+        );
+      
       default:
         return null;
     }
@@ -153,7 +226,7 @@ const Documentation = () => {
           <div className="lg:col-span-3">
             {selectedTopic ? ( 
               <div className="bg-white p-8 rounded-lg shadow-md">
-                <h1 className="text-3xl font-bold mb-6">{selectedTopic.title} hello</h1>
+                <h1 className="text-3xl font-bold mb-6">{selectedTopic.title}</h1>
                 <div className="prose max-w-none">
                   {selectedTopic.content && selectedTopic.content.map((block, index) => (
                     <div key={index}>{renderContentBlock(block)}</div>

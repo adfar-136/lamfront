@@ -72,10 +72,10 @@ const AddDocumentation = () => {
           [metadataField]: value
         }
       }));
-    } else {
+    } else if (name === 'content' && (contentBlock.type === 'ordered-list' || contentBlock.type === 'unordered-list')) {
       setContentBlock(prev => ({
         ...prev,
-        [name]: value
+        content: value
       }));
     }
   };
@@ -110,26 +110,32 @@ const AddDocumentation = () => {
         metadata.alt = contentBlock.metadata.alt;
         metadata.caption = contentBlock.metadata.caption;
         break;
-      case 'video':
-        if (!contentBlock.metadata.url) {
-          alert('Video URL is required');
-          isValid = false;
-        }
-        metadata.url = contentBlock.metadata.url;
-        break;
       case 'link':
         if (!contentBlock.metadata.url) {
-          alert('Link URL is required');
+           alert('Link URL is required');
           isValid = false;
         }
         metadata.url = contentBlock.metadata.url;
         break;
-      case 'button':
-        if (!contentBlock.metadata.url) {
-          alert('Button URL is required');
+      
+      case 'quote':
+        if (!contentBlock.metadata.author) {
+          alert('Quote author is required');
           isValid = false;
         }
-        metadata.url = contentBlock.metadata.url;
+        metadata.author = contentBlock.metadata.author;
+        break;
+      case 'table':
+        try {
+          const tableData = JSON.parse(contentBlock.content);
+          if (!Array.isArray(tableData) || !tableData.every(row => Array.isArray(row))) {
+            alert('Table content must be a valid 2D array');
+            isValid = false;
+          }
+        } catch (e) {
+          alert('Invalid table format. Please provide a valid JSON array');
+          isValid = false;
+        }
         break;
     }
 
@@ -197,8 +203,17 @@ const AddDocumentation = () => {
           ...topic,
           content: uniqueContent.filter(block => {
             if (!block.type || !block.content) return false;
-            if (!['text', 'heading', 'code', 'image'].includes(block.type)) return false;
+            if (!['text', 'heading', 'code', 'image', 'quote', 'table', 'link', 'button', 'divider', 'ordered-list', 'unordered-list'].includes(block.type)) return false;
             if (block.type === 'heading' && (!block.metadata?.level || block.metadata.level < 1 || block.metadata.level > 6)) return false;
+            if (block.type === 'quote' && !block.metadata?.author) return false;
+            if (block.type === 'table') {
+              try {
+                const tableData = JSON.parse(block.content);
+                if (!Array.isArray(tableData) || !tableData.every(row => Array.isArray(row))) return false;
+              } catch (e) {
+                return false;
+              }
+            }
             return true;
           })
         };
@@ -262,7 +277,7 @@ const AddDocumentation = () => {
       if (techSlug && topicSlug) {
         try {
           const techResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}`);
-          const topicResponse = await axios.get(`hhttps://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
+          const topicResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
           
           setSelectedTechnology(techResponse.data);
           setFormData(prev => ({
@@ -457,13 +472,11 @@ const AddDocumentation = () => {
                             <option value="heading">Heading</option>
                             <option value="code">Code</option>
                             <option value="image">Image</option>
-                            <option value="list">List</option>
                             <option value="quote">Quote</option>
                             <option value="table">Table</option>
-                            <option value="video">Video</option>
                             <option value="link">Link</option>
-                            <option value="button">Button</option>
-                            <option value="divider">Divider</option>
+                            <option value="ordered-list">Ordered List</option>
+                            <option value="unordered-list">Unordered List</option>
                           </select>
                         </div>
                         
@@ -531,6 +544,47 @@ const AddDocumentation = () => {
                           </div>
                         )}
 
+                        
+
+                        {contentBlock.type === 'quote' && (
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Quote Text</label>
+                              <textarea
+                                name="content"
+                                value={contentBlock.content}
+                                onChange={handleContentBlockChange}
+                                className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
+                                rows="3"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">Author</label>
+                              <input
+                                type="text"
+                                name="metadata.author"
+                                value={contentBlock.metadata.author || ''}
+                                onChange={handleContentBlockChange}
+                                className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {contentBlock.type === 'table' && (
+                          <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Table Data (JSON format)</label>
+                            <textarea
+                              name="content"
+                              value={contentBlock.content}
+                              onChange={handleContentBlockChange}
+                              placeholder='[\n  ["Header 1", "Header 2"],\n  ["Row 1 Col 1", "Row 1 Col 2"]\n]'
+                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors font-mono"
+                              rows="6"
+                            />
+                          </div>
+                        )}
+
                         {(contentBlock.type === 'video' || contentBlock.type === 'link' || contentBlock.type === 'button') && (
                           <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">URL</label>
@@ -540,6 +594,20 @@ const AddDocumentation = () => {
                               value={contentBlock.metadata.url || ''}
                               onChange={handleContentBlockChange}
                               className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
+                            />
+                          </div>
+                        )}
+
+                        {(contentBlock.type === 'ordered-list' || contentBlock.type === 'unordered-list') && (
+                          <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">List Items (one per line)</label>
+                            <textarea
+                              name="content"
+                              value={contentBlock.content}
+                              onChange={handleContentBlockChange}
+                              placeholder="Enter list items, one per line"
+                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
+                              rows="6"
                             />
                           </div>
                         )}
@@ -562,7 +630,7 @@ const AddDocumentation = () => {
                         <div key={blockIndex} className="p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
                           <div className="flex justify-between items-center">
                             <p className="text-sm">
-                              <span className="font-semibold">{block.type}:</span> {block.content.substring(0, 50)}...
+                              <span className="font-semibold">{block.type}:</span> {Array.isArray(block.content) ? block.content.join(', ').substring(0, 50) : block.content.substring(0, 50)}...
                             </p>
                             <button
                               type="button"
