@@ -145,23 +145,25 @@ const Documentation = () => {
             {block.content}
           </a>
         );
-
-      case 'ordered-list':
+      
+      case 'list':
+        const listItems = Array.isArray(block.content) ? block.content : block.content.split('\n').filter(item => item.trim() !== '');
         return (
-          <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-600">
-            {block.content.split('\n').filter(item => item.trim() !== '').map((item, index) => (
-              <li key={index} className="text-left">{item.trim()}</li>
-            ))}
-          </ol>
-        );
-
-      case 'unordered-list':
-        return (
-          <ul className="list-disc list-inside mb-4 space-y-2 text-gray-600">
-            {block.content.split('\n').filter(item => item.trim() !== '').map((item, index) => (
-              <li key={index} className="text-left">{item.trim()}</li>
-            ))}
-          </ul>
+          <div className="mb-4">
+            {block.metadata.listType === 'ordered' ? (
+              <ol className="list-decimal list-inside space-y-2 text-gray-600">
+                {listItems.map((item, index) => (
+                  <li key={index} className="text-left">{item}</li>
+                ))}
+              </ol>
+            ) : (
+              <ul className="list-disc list-inside space-y-2 text-gray-600">
+                {listItems.map((item, index) => (
+                  <li key={index} className="text-left">{item}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         );
       
       default:

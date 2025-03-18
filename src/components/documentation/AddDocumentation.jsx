@@ -72,10 +72,11 @@ const AddDocumentation = () => {
           [metadataField]: value
         }
       }));
-    } else if (name === 'content' && (contentBlock.type === 'ordered-list' || contentBlock.type === 'unordered-list')) {
+
+    } else {
       setContentBlock(prev => ({
         ...prev,
-        content: value
+        [name]: value
       }));
     }
   };
@@ -137,6 +138,7 @@ const AddDocumentation = () => {
           isValid = false;
         }
         break;
+
     }
 
     if (isValid) {
@@ -203,9 +205,10 @@ const AddDocumentation = () => {
           ...topic,
           content: uniqueContent.filter(block => {
             if (!block.type || !block.content) return false;
-            if (!['text', 'heading', 'code', 'image', 'quote', 'table', 'link', 'button', 'divider', 'ordered-list', 'unordered-list'].includes(block.type)) return false;
+            if (!['text', 'heading', 'code', 'image', 'quote', 'table', 'link', 'list'].includes(block.type)) return false;
             if (block.type === 'heading' && (!block.metadata?.level || block.metadata.level < 1 || block.metadata.level > 6)) return false;
             if (block.type === 'quote' && !block.metadata?.author) return false;
+
             if (block.type === 'table') {
               try {
                 const tableData = JSON.parse(block.content);
@@ -475,8 +478,6 @@ const AddDocumentation = () => {
                             <option value="quote">Quote</option>
                             <option value="table">Table</option>
                             <option value="link">Link</option>
-                            <option value="ordered-list">Ordered List</option>
-                            <option value="unordered-list">Unordered List</option>
                           </select>
                         </div>
                         
@@ -544,7 +545,7 @@ const AddDocumentation = () => {
                           </div>
                         )}
 
-                        
+
 
                         {contentBlock.type === 'quote' && (
                           <div className="space-y-4">
@@ -594,20 +595,6 @@ const AddDocumentation = () => {
                               value={contentBlock.metadata.url || ''}
                               onChange={handleContentBlockChange}
                               className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
-                            />
-                          </div>
-                        )}
-
-                        {(contentBlock.type === 'ordered-list' || contentBlock.type === 'unordered-list') && (
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">List Items (one per line)</label>
-                            <textarea
-                              name="content"
-                              value={contentBlock.content}
-                              onChange={handleContentBlockChange}
-                              placeholder="Enter list items, one per line"
-                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
-                              rows="6"
                             />
                           </div>
                         )}
