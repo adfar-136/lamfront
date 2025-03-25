@@ -13,12 +13,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <div className="flex items-center">
-              <Link to="/" className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-3xl font-extrabold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300">Lamicons</Link>
+              <Link to="/" className="flex items-center gap-2">
+                <img src="/logo.png" alt="Lamicons Logo" className="w-36 h-8" />
+              </Link>
             </div>
             <div className="hidden sm:flex sm:items-center sm:ml-8">
               <Link to="/courses" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Courses</Link>
               <Link to="/documentation" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Documentation</Link>
-              <Link to="/interview" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Interview Prep</Link>
+              <Link to="/practice" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Interview Prep</Link>
               <Link to="/coding" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Coding Practice</Link>
               <Link to="/contact" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">Contact</Link>
               <Link to="/about" className="text-gray-600 hover:text-indigo-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105">About</Link>
@@ -76,7 +78,7 @@ const Navbar = () => {
         <div className="px-4 py-3 space-y-2">
           <Link to="/courses" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Courses</Link>
           <Link to="/documentation" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Documentation</Link>
-          <Link to="/interview" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Interview Prep</Link>
+          <Link to="/practice" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Interview Prep</Link>
           <Link to="/coding" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Coding Practice</Link>
           <Link to="/contact" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">Contact</Link>
           <Link to="/about" className="text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 block px-3 py-2 rounded-md text-base font-medium transition-colors">About</Link>

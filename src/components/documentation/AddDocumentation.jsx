@@ -28,6 +28,15 @@ const AddDocumentation = () => {
     metadata: {}
   });
 
+  const [tableData, setTableData] = useState({
+    rows: 2,
+    cols: 2,
+    cells: [
+      ['', ''],
+      ['', '']
+    ]
+  });
+
   const handleTechnologyChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -58,11 +67,54 @@ const AddDocumentation = () => {
   const handleContentBlockChange = (e) => {
     const { name, value } = e.target;
     if (name === 'type') {
+      if (value === 'table') {
+        setTableData({
+          rows: 2,
+          cols: 2,
+          cells: [
+            ['', ''],
+            ['', '']
+          ]
+        });
+      }
       setContentBlock({
         type: value,
         content: '',
-        metadata: {}
+        metadata: value === 'ordered-list' || value === 'unordered-list' 
+          ? { items: [''] } 
+          : {}
       });
+    } else if (name === 'list-item') {
+      const index = parseInt(e.target.dataset.index);
+      const newItems = [...(contentBlock.metadata.items || [])];
+      newItems[index] = value;
+      
+      setContentBlock(prev => ({
+        ...prev,
+        metadata: {
+          ...prev.metadata,
+          items: newItems
+        }
+      }));
+    } else if (name === 'add-list-item') {
+      setContentBlock(prev => ({
+        ...prev,
+        metadata: {
+          ...prev.metadata,
+          items: [...(prev.metadata.items || []), '']
+        }
+      }));
+    } else if (name === 'remove-list-item') {
+      const index = parseInt(e.target.dataset.index);
+      const newItems = contentBlock.metadata.items.filter((_, i) => i !== index);
+      
+      setContentBlock(prev => ({
+        ...prev,
+        metadata: {
+          ...prev.metadata,
+          items: newItems.length > 0 ? newItems : ['']
+        }
+      }));
     } else if (name.startsWith('metadata.')) {
       const metadataField = name.split('.')[1];
       setContentBlock(prev => ({
@@ -72,7 +124,6 @@ const AddDocumentation = () => {
           [metadataField]: value
         }
       }));
-
     } else {
       setContentBlock(prev => ({
         ...prev,
@@ -81,11 +132,56 @@ const AddDocumentation = () => {
     }
   };
 
+  const handleTableChange = (rowIndex, colIndex, value) => {
+    setTableData(prev => {
+      const newCells = [...prev.cells];
+      newCells[rowIndex][colIndex] = value;
+      return {
+        ...prev,
+        cells: newCells
+      };
+    });
+  };
+
+  const addTableRow = () => {
+    setTableData(prev => ({
+      ...prev,
+      rows: prev.rows + 1,
+      cells: [...prev.cells, new Array(prev.cols).fill('')]
+    }));
+  };
+
+  const removeTableRow = (rowIndex) => {
+    if (tableData.rows <= 2) return; // Maintain minimum 2 rows
+    setTableData(prev => ({
+      ...prev,
+      rows: prev.rows - 1,
+      cells: prev.cells.filter((_, index) => index !== rowIndex)
+    }));
+  };
+
+  const addTableColumn = () => {
+    setTableData(prev => ({
+      ...prev,
+      cols: prev.cols + 1,
+      cells: prev.cells.map(row => [...row, ''])
+    }));
+  };
+
+  const removeTableColumn = (colIndex) => {
+    if (tableData.cols <= 2) return; // Maintain minimum 2 columns
+    setTableData(prev => ({
+      ...prev,
+      cols: prev.cols - 1,
+      cells: prev.cells.map(row => row.filter((_, index) => index !== colIndex))
+    }));
+  };
+
   const addContentBlock = () => {
-    if (!contentBlock.content) return;
+    if (!contentBlock.type) return;
 
     let isValid = true;
-    const metadata = {};
+    const metadata = { ...contentBlock.metadata };
 
     switch (contentBlock.type) {
       case 'heading':
@@ -127,15 +223,38 @@ const AddDocumentation = () => {
         metadata.author = contentBlock.metadata.author;
         break;
       case 'table':
-        try {
-          const tableData = JSON.parse(contentBlock.content);
-          if (!Array.isArray(tableData) || !tableData.every(row => Array.isArray(row))) {
-            alert('Table content must be a valid 2D array');
-            isValid = false;
-          }
-        } catch (e) {
-          alert('Invalid table format. Please provide a valid JSON array');
+        // Validate table data
+        const hasEmptyHeaders = tableData.cells[0].every(cell => cell.trim() === '');
+        if (hasEmptyHeaders) {
+          alert('Please add at least one header to the table');
           isValid = false;
+          break;
+        }
+
+        // Filter out completely empty rows (except header)
+        const filteredCells = [
+          tableData.cells[0], // Keep header row
+          ...tableData.cells.slice(1).filter(row => row.some(cell => cell.trim() !== ''))
+        ];
+
+        if (filteredCells.length < 2) {
+          alert('Table must have at least one header row and one data row');
+          isValid = false;
+          break;
+        }
+
+        // Set the content as stringified table data
+        contentBlock.content = JSON.stringify(filteredCells);
+        break;
+      
+      case 'ordered-list':
+      case 'unordered-list':
+        if (!metadata.items || !metadata.items.filter(item => item.trim()).length) {
+          alert('List must contain at least one non-empty item');
+          isValid = false;
+        } else {
+          // Filter out empty items
+          metadata.items = metadata.items.filter(item => item.trim());
         }
         break;
 
@@ -145,26 +264,30 @@ const AddDocumentation = () => {
       setFormData(prev => {
         const updatedTopics = [...prev.topics];
         const newBlock = {
-          ...contentBlock,
-          metadata
+          type: contentBlock.type,
+          content: contentBlock.content,
+          metadata: metadata
         };
         
-        // Check if this exact block already exists in the current topic
-        const isDuplicate = updatedTopics[currentTopic].content.some(existingBlock => 
-          existingBlock.type === newBlock.type && 
-          existingBlock.content === newBlock.content
-        );
-
-        if (!isDuplicate) {
-          updatedTopics[currentTopic].content.push(newBlock);
-        }
-
+        updatedTopics[currentTopic].content.push(newBlock);
         return { ...prev, topics: updatedTopics };
       });
+
+      // Reset content block and table data
       setContentBlock({
         type: 'text',
         content: '',
         metadata: {}
+      });
+      
+      // Reset table data to default state
+      setTableData({
+        rows: 2,
+        cols: 2,
+        cells: [
+          ['', ''],
+          ['', '']
+        ]
       });
     }
   };
@@ -191,34 +314,24 @@ const AddDocumentation = () => {
 
       // Validate topics and their content
       const validTopics = formData.topics.map(topic => {
-        // Remove duplicate content blocks by comparing content and type
-        const uniqueContent = topic.content.reduce((acc, block) => {
-          const isDuplicate = acc.some(existingBlock => 
-            existingBlock.type === block.type && 
-            existingBlock.content === block.content
-          );
-          if (!isDuplicate) acc.push(block);
-          return acc;
-        }, []);
+        // Process content blocks before submission
+        const processedContent = topic.content.map(block => {
+          if (block.type === 'ordered-list' || block.type === 'unordered-list') {
+            const items = block.metadata.items.filter(item => item.trim() !== '');
+            return {
+              type: block.type,
+              content: JSON.stringify(items), // Store items as JSON string in content
+              metadata: {
+                items: items
+              }
+            };
+          }
+          return block;
+        });
 
         return {
           ...topic,
-          content: uniqueContent.filter(block => {
-            if (!block.type || !block.content) return false;
-            if (!['text', 'heading', 'code', 'image', 'quote', 'table', 'link', 'list'].includes(block.type)) return false;
-            if (block.type === 'heading' && (!block.metadata?.level || block.metadata.level < 1 || block.metadata.level > 6)) return false;
-            if (block.type === 'quote' && !block.metadata?.author) return false;
-
-            if (block.type === 'table') {
-              try {
-                const tableData = JSON.parse(block.content);
-                if (!Array.isArray(tableData) || !tableData.every(row => Array.isArray(row))) return false;
-              } catch (e) {
-                return false;
-              }
-            }
-            return true;
-          })
+          content: processedContent
         };
       }).filter(topic => topic.title && topic.slug);
 
@@ -230,7 +343,7 @@ const AddDocumentation = () => {
       // Check if technology exists
       let techExists = false;
       try {
-        const techCheck = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${formData.slug.trim().toLowerCase()}`);
+        const techCheck = await axios.get(`http://localhost:8000/api/documentation/technologies/${formData.slug.trim().toLowerCase()}`);
         techExists = true;
       } catch (error) {
         if (error.response?.status !== 404) {
@@ -240,7 +353,7 @@ const AddDocumentation = () => {
 
       // If technology doesn't exist, create it
       if (!techExists) {
-        await axios.post('https://lamback.onrender.com/api/documentation/technologies', {
+        await axios.post('http://localhost:8000/api/documentation/technologies', {
           name: formData.name.trim(),
           slug: formData.slug.trim().toLowerCase(),
           description: formData.description.trim(),
@@ -252,12 +365,24 @@ const AddDocumentation = () => {
       // Add topics one by one
       for (const topic of validTopics) {
         try {
-          await axios.post(`https://lamback.onrender.com/api/documentation/technologies/${formData.slug.trim().toLowerCase()}/topics`, {
-            title: topic.title.trim(),
-            slug: topic.slug.trim().toLowerCase(),
-            content: topic.content,
-            order: topic.order || 0
-          });
+          const processedTopic = {
+            ...topic,
+            content: topic.content.map(block => {
+              if (block.type === 'ordered-list' || block.type === 'unordered-list') {
+                const items = block.metadata.items.filter(item => item.trim() !== '');
+                return {
+                  type: block.type,
+                  content: JSON.stringify(items), // Store items as JSON string in content
+                  metadata: {
+                    items: items
+                  }
+                };
+              }
+              return block;
+            })
+          };
+
+          await axios.post(`http://localhost:8000/api/documentation/technologies/${formData.slug.trim().toLowerCase()}/topics`, processedTopic);
         } catch (topicError) {
           if (topicError.response?.status === 400 && topicError.response?.data?.message?.includes('already exists')) {
             alert(`Topic '${topic.title}' already exists in this technology. Please use a different slug.`);
@@ -279,8 +404,8 @@ const AddDocumentation = () => {
     const fetchExistingContent = async () => {
       if (techSlug && topicSlug) {
         try {
-          const techResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}`);
-          const topicResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
+          const techResponse = await axios.get(`http://localhost:8000/api/documentation/technologies/${techSlug}`);
+          const topicResponse = await axios.get(`http://localhost:8000/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
           
           setSelectedTechnology(techResponse.data);
           setFormData(prev => ({
@@ -307,7 +432,7 @@ const AddDocumentation = () => {
 
     const fetchTechnologies = async () => {
       try {
-        const response = await axios.get('https://lamback.onrender.com/api/documentation/technologies');
+        const response = await axios.get('http://localhost:8000/api/documentation/technologies');
         setTechnologies(response.data);
       } catch (error) {
         console.error('Error fetching technologies:', error);
@@ -327,6 +452,97 @@ const AddDocumentation = () => {
       icon: tech.icon,
       order: tech.order
     }));
+  };
+
+  const renderListInput = () => {
+    if (contentBlock.type !== 'ordered-list' && contentBlock.type !== 'unordered-list') {
+      return null;
+    }
+
+    return (
+      <div className="space-y-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          List Items
+        </label>
+        {contentBlock.metadata.items?.map((item, index) => (
+          <div key={index} className="flex items-center space-x-2">
+            <span className="text-gray-500 text-sm w-8">
+              {contentBlock.type === 'ordered-list' ? `${index + 1}.` : '•'}
+            </span>
+            <input
+              type="text"
+              value={item}
+              onChange={(e) => handleContentBlockChange({
+                target: {
+                  name: 'list-item',
+                  value: e.target.value,
+                  dataset: { index }
+                }
+              })}
+              className="flex-1 rounded-lg border-2 border-gray-200 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+              placeholder={`Enter list item ${index + 1}`}
+            />
+            <button
+              type="button"
+              onClick={() => handleContentBlockChange({
+                target: {
+                  name: 'remove-list-item',
+                  dataset: { index }
+                }
+              })}
+              className="p-2 text-red-600 hover:text-red-800 transition-colors"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => handleContentBlockChange({
+            target: { name: 'add-list-item' }
+          })}
+          className="w-full py-2 px-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:text-indigo-600 hover:border-indigo-500 transition-colors flex items-center justify-center space-x-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+          </svg>
+          <span>Add New Item</span>
+        </button>
+      </div>
+    );
+  };
+
+  const renderContentBlockPreview = (block) => {
+    if (block.type === 'table') {
+      try {
+        const tableData = JSON.parse(block.content);
+        const headers = tableData[0].join(', ');
+        return `Table with headers: ${headers}`;
+      } catch (e) {
+        return 'Invalid table data';
+      }
+    }
+    if (block.type === 'ordered-list' || block.type === 'unordered-list') {
+      const items = block.metadata?.items || [];
+      return `${block.type}: ${items.join(', ').substring(0, 50)}${items.join(', ').length > 50 ? '...' : ''}`;
+    }
+    return `${block.type}: ${block.content?.substring(0, 50) || ''}${block.content?.length > 50 ? '...' : ''}`;
+  };
+
+  const validateTable = () => {
+    // Check if headers are empty
+    const hasEmptyHeaders = tableData.cells[0].every(cell => cell.trim() === '');
+    if (hasEmptyHeaders) {
+      return false;
+    }
+
+    // Check if there's at least one non-empty data row
+    const hasDataRow = tableData.cells.slice(1).some(row => row.some(cell => cell.trim() !== ''));
+    if (!hasDataRow) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -478,19 +694,25 @@ const AddDocumentation = () => {
                             <option value="quote">Quote</option>
                             <option value="table">Table</option>
                             <option value="link">Link</option>
+                            <option value="ordered-list">Ordered List</option>
+                            <option value="unordered-list">Unordered List</option>
                           </select>
                         </div>
                         
-                        <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
-                          <textarea
-                            name="content"
-                            value={contentBlock.content}
-                            onChange={handleContentBlockChange}
-                            className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
-                            rows="4"
-                          />
-                        </div>
+                        {renderListInput()}
+
+                        {!['ordered-list', 'unordered-list'].includes(contentBlock.type) && (
+                          <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
+                            <textarea
+                              name="content"
+                              value={contentBlock.content}
+                              onChange={handleContentBlockChange}
+                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
+                              rows="4"
+                            />
+                          </div>
+                        )}
 
                         {contentBlock.type === 'heading' && (
                           <div>
@@ -545,8 +767,6 @@ const AddDocumentation = () => {
                           </div>
                         )}
 
-
-
                         {contentBlock.type === 'quote' && (
                           <div className="space-y-4">
                             <div>
@@ -573,29 +793,75 @@ const AddDocumentation = () => {
                         )}
 
                         {contentBlock.type === 'table' && (
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Table Data (JSON format)</label>
-                            <textarea
-                              name="content"
-                              value={contentBlock.content}
-                              onChange={handleContentBlockChange}
-                              placeholder='[\n  ["Header 1", "Header 2"],\n  ["Row 1 Col 1", "Row 1 Col 2"]\n]'
-                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors font-mono"
-                              rows="6"
-                            />
-                          </div>
-                        )}
+                          <div className="space-y-4">
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Table Editor</label>
+                            
+                            <div className="overflow-x-auto border rounded-lg">
+                              <table className="min-w-full divide-y divide-gray-200">
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                  {tableData.cells.map((row, rowIndex) => (
+                                    <tr key={rowIndex} className="divide-x divide-gray-200">
+                                      {row.map((cell, colIndex) => (
+                                        <td key={colIndex} className="p-2">
+                                          <input
+                                            type="text"
+                                            value={cell}
+                                            onChange={(e) => handleTableChange(rowIndex, colIndex, e.target.value)}
+                                            className="w-full border-0 focus:ring-2 focus:ring-indigo-500 rounded p-1"
+                                            placeholder={rowIndex === 0 ? `Header ${colIndex + 1}` : `Cell ${rowIndex},${colIndex}`}
+                                          />
+                                        </td>
+                                      ))}
+                                      <td className="p-2 w-10">
+                                        {rowIndex > 0 && (
+                                          <button
+                                            type="button"
+                                            onClick={() => removeTableRow(rowIndex)}
+                                            className="text-red-600 hover:text-red-800"
+                                            title="Remove row"
+                                          >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                            </svg>
+                                          </button>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
 
-                        {(contentBlock.type === 'video' || contentBlock.type === 'link' || contentBlock.type === 'button') && (
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">URL</label>
-                            <input
-                              type="text"
-                              name="metadata.url"
-                              value={contentBlock.metadata.url || ''}
-                              onChange={handleContentBlockChange}
-                              className="mt-1 block w-full rounded-lg border-2 border-gray-200 px-4 py-3 bg-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors"
-                            />
+                            <div className="flex space-x-4">
+                              <button
+                                type="button"
+                                onClick={addTableRow}
+                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center space-x-2"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                                </svg>
+                                <span>Add Row</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={addTableColumn}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                                </svg>
+                                <span>Add Column</span>
+                              </button>
+                            </div>
+
+                            <div className="flex items-center space-x-2 text-sm text-gray-500">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                              </svg>
+                              <span>First row will be treated as header row</span>
+                            </div>
                           </div>
                         )}
 
@@ -617,7 +883,8 @@ const AddDocumentation = () => {
                         <div key={blockIndex} className="p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
                           <div className="flex justify-between items-center">
                             <p className="text-sm">
-                              <span className="font-semibold">{block.type}:</span> {Array.isArray(block.content) ? block.content.join(', ').substring(0, 50) : block.content.substring(0, 50)}...
+                              <span className="font-semibold">{block.type}:</span>{' '}
+                              {renderContentBlockPreview(block)}
                             </p>
                             <button
                               type="button"
@@ -638,12 +905,14 @@ const AddDocumentation = () => {
         </div>
 
         <div className="flex justify-end">
-          <button
-            type="submit"
-            className="px-8 py-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-md hover:shadow-lg font-medium text-lg"
-          >
-            Save Documentation
-          </button>
+          <div className="space-y-4">
+            <button
+              type="submit"
+              className="px-8 py-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-md hover:shadow-lg font-medium text-lg"
+            >
+              Save Documentation
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -651,3 +920,4 @@ const AddDocumentation = () => {
 };
 
 export default AddDocumentation;
+            

@@ -10,8 +10,6 @@ import UserProfile from './components/profile/UserProfile';
 import Courses from './components/courses/Courses';
 import CourseDetail from './components/courses/CourseDetail';
 import Documentation from './components/documentation/Documentation';
-import InterviewPrep from './components/interview/InterviewPrep';
-import QuizInterface from './components/interview/QuizInterface';
 import About from './components/About';
 import Contact from './components/Contact';
 import ProblemArchive from './components/coding/ProblemArchive';
@@ -19,6 +17,9 @@ import ProblemSolving from './components/coding/ProblemSolving';
 import './App.css';
 import CompanyRequirementForm from './components/company/CompanyRequirementForm';
 import AddDocumentation from './components/documentation/AddDocumentation';
+import Practice from './components/practice/Practice';
+import QuizAttempt from './components/practice/QuizAttempt';
+import AddQuiz from './components/practice/AddQuiz';
 
 function App() {
   return (
@@ -45,13 +46,14 @@ function App() {
             <Route path="/documentation/:technology" element={<Documentation />} />
             <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
             <Route path="/add-doc" element={<AddDocumentation />} />
-            <Route path="/interview" element={<ProtectedRoute allowedRoles={['student', 'admin']}><InterviewPrep /></ProtectedRoute>} />
-            <Route path="/interview/:stackId/:level" element={<ProtectedRoute allowedRoles={['student', 'admin']}><QuizInterface /></ProtectedRoute>} />
             <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />
             <Route path="/coding/:problemId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemSolving /></ProtectedRoute>} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/hire-educators" element={<CompanyRequirementForm/>} />
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/practice/:techStackId/:difficulty" element={<QuizAttempt />} />
+            <Route path="/practice/add" element={<AddQuiz />} />
 
             {/* Add more routes as needed */}
           </Routes>

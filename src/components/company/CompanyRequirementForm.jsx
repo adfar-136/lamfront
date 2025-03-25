@@ -250,7 +250,7 @@ const CompanyRequirementForm = () => {
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md shadow-sm p-3 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 transition-colors duration-200"
                 placeholder="Any additional information you'd like to share..."
-              />
+              ></textarea>
             </div>
 
             <div className="flex items-center justify-end">
