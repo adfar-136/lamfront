@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 
 const ProfileForm = ({ initialData, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -27,25 +27,16 @@ const ProfileForm = ({ initialData, onCancel }) => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-      setLoading(false);
-    } else {
-      const fetchProfile = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const res = await axios.get('https://lamback.onrender.com/api/profile/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          if (res.data) {
-            setFormData(res.data);
-          }
-          setLoading(false);
-        } catch (err) {
-          setError(err.response?.data?.message || 'Error fetching profile');
-          setLoading(false);
-        }
-      };
+    const fetchProfile = async () => {
+      try {
+        const response = await axiosInstance.get('/api/profile');
+        setFormData(response.data);
+      } catch (err) {
+        setError('Failed to fetch profile data');
+      }
+    };
+
+    if (!initialData) {
       fetchProfile();
     }
   }, [initialData]);
@@ -53,17 +44,14 @@ const ProfileForm = ({ initialData, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      await axios.post('https://lamback.onrender.com/api/profile', formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axiosInstance.put('/api/profile', formData);
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
         if (onCancel) onCancel();
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Error updating profile');
+      setError('Failed to update profile');
     }
   };
 

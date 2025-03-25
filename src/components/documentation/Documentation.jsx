@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import { useParams } from 'react-router-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -15,7 +15,7 @@ const Documentation = () => {
   useEffect(() => {
     const fetchTechnologies = async () => {
       try {
-        const response = await axios.get('https://lamback.onrender.com/api/documentation/technologies');
+        const response = await axiosInstance.get('/api/documentation/technologies');
         setTechnologies(response.data);
         setLoading(false);
       } catch (err) {
@@ -31,7 +31,7 @@ const Documentation = () => {
     if (techSlug) {
       const fetchTechnology = async () => {
         try {
-          const response = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}`);
+          const response = await axiosInstance.get(`/api/documentation/technologies/${techSlug}`);
           setSelectedTech(response.data);
         } catch (err) {
           setError('Failed to fetch technology details');
@@ -45,7 +45,7 @@ const Documentation = () => {
     if (techSlug && topicSlug) {
       const fetchTopic = async () => {
         try {
-          const response = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
+          const response = await axiosInstance.get(`/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
           if (response.data && response.data.content) {
             setSelectedTopic(response.data);
             console.log(response.data.content);

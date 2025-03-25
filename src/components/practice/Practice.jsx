@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 
 const Practice = () => {
   const [techStacks, setTechStacks] = useState([]);
@@ -10,7 +10,7 @@ const Practice = () => {
   useEffect(() => {
     const fetchTechStacks = async () => {
       try {
-        const response = await axios.get('/api/practice/tech-stacks');
+        const response = await axiosInstance.get('/api/practice/tech-stacks');
         setTechStacks(response.data);
         setLoading(false);
       } catch (err) {

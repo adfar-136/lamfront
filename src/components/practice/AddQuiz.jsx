@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const getAuthHeader = () => {
-  const token = localStorage.getItem('token'); // Or however you store your auth token
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-};
+import axiosInstance from '../../utils/axios';
 
 const AddQuiz = () => {
   const [techStacks, setTechStacks] = useState([]);
@@ -39,7 +30,7 @@ const AddQuiz = () => {
 
   const fetchTechStacks = async () => {
     try {
-      const response = await axios.get('/api/practice/tech-stacks'); // Public route, no auth needed
+      const response = await axiosInstance.get('/api/practice/tech-stacks');
       setTechStacks(response.data);
       setLoading(false);
     } catch (err) {
@@ -55,7 +46,7 @@ const AddQuiz = () => {
   const handleAddStack = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/practice/tech-stacks', stackForm, getAuthHeader());
+      await axiosInstance.post('/api/practice/tech-stacks', stackForm);
       setMessage({ type: 'success', text: 'Tech stack added successfully!' });
       setStackForm({ name: '', description: '', icon: 'default-icon.png' });
       setShowAddStack(false);
@@ -94,7 +85,7 @@ const AddQuiz = () => {
     }
 
     try {
-      await axios.post('/api/practice/questions', formData, getAuthHeader());
+      await axiosInstance.post('/api/practice/questions', formData);
       setMessage({ type: 'success', text: 'Question added successfully!' });
       
       // Reset form

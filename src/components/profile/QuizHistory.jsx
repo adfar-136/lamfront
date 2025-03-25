@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import { useAuth } from '../../contexts/AuthContext';
 
 const QuizHistory = () => {
@@ -11,14 +11,7 @@ const QuizHistory = () => {
   useEffect(() => {
     const fetchQuizAttempts = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('Authentication token not found');
-        }
-
-        const response = await axios.get('/api/profile/quiz-attempts', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await axiosInstance.get('/api/profile/quiz-attempts');
         setQuizData(response.data);
         setLoading(false);
       } catch (err) {

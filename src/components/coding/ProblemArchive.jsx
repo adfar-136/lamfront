@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import axiosInstance from '../../utils/axios';
 
 const ProblemArchive = () => {
   const { user } = useAuth();
@@ -31,26 +32,12 @@ const ProblemArchive = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('https://lamback.onrender.com/api/coding/questions', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch problems');
-        }
-
-        const data = await response.json();
-        // Extract questions from the paginated response
-        setProblems(Array.isArray(data.questions) ? data.questions : []);
+        const response = await axiosInstance.get('/api/coding/questions');
+        setProblems(Array.isArray(response.data.questions) ? response.data.questions : []);
         setLoading(false);
       } catch (err) {
         setError(err.message);
         setLoading(false);
-        // Set problems to empty array on error
         setProblems([]);
       }
     };

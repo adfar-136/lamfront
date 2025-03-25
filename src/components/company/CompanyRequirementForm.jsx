@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../utils/axios';
 
 const CompanyRequirementForm = () => {
   const navigate = useNavigate();
@@ -60,39 +61,26 @@ const CompanyRequirementForm = () => {
     setSubmitStatus({ type: '', message: '' });
 
     try {
-      const response = await fetch('https://lamback.onrender.com/api/company-requirements', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      const response = await axiosInstance.post('/api/company-requirements', formData);
+      setSubmitStatus({
+        type: 'success',
+        message: 'Your requirement has been submitted successfully! We will contact you soon.'
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'Your requirement has been submitted successfully! We will contact you soon.'
-        });
-        setFormData({
-          companyName: '',
-          email: '',
-          contactPerson: '',
-          phone: '',
-          industryType: '',
-          educatorRequirements: '',
-          engagementMode: 'Live',
-          startDate: '',
-          additionalNotes: ''
-        });
-      } else {
-        throw new Error(data.message || 'Something went wrong');
-      }
+      setFormData({
+        companyName: '',
+        email: '',
+        contactPerson: '',
+        phone: '',
+        industryType: '',
+        educatorRequirements: '',
+        engagementMode: 'Live',
+        startDate: '',
+        additionalNotes: ''
+      });
     } catch (error) {
       setSubmitStatus({
         type: 'error',
-        message: error.message
+        message: error.response?.data?.message || 'Something went wrong'
       });
     } finally {
       setIsSubmitting(false);

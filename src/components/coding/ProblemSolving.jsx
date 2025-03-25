@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
 import { useAuth } from '../../contexts/AuthContext';
+import axiosInstance from '../../utils/axios';
 
 const ProblemSolving = () => {
   const { problemId } = useParams();
@@ -25,22 +26,10 @@ const ProblemSolving = () => {
   useEffect(() => {
     const fetchProblem = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`https://lamback.onrender.com/api/coding/questions/${problemId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch problem');
-        }
-
-        const data = await response.json();
-        setProblem(data);
-        setLanguage(data.defaultLanguage || 'javascript');
-        setCode(languageOptions.find(lang => lang.id === (data.defaultLanguage || 'javascript')).defaultCode);
+        const response = await axiosInstance.get(`/api/coding/questions/${problemId}`);
+        setProblem(response.data);
+        setLanguage(response.data.defaultLanguage || 'javascript');
+        setCode(languageOptions.find(lang => lang.id === (response.data.defaultLanguage || 'javascript')).defaultCode);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -65,21 +54,11 @@ const ProblemSolving = () => {
     setTestResults(null);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`https://lamback.onrender.com/api/coding/run/${problemId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          code,
-          language
-        })
+      const response = await axiosInstance.post(`/api/coding/run/${problemId}`, {
+        code,
+        language
       });
-
-      const results = await response.json();
-      setTestResults(results);
+      setTestResults(response.data);
     } catch (err) {
       setError('Failed to execute code');
     } finally {
@@ -92,21 +71,11 @@ const ProblemSolving = () => {
     setTestResults(null);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`https://lamback.onrender.com/api/coding/submit/${problemId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          code,
-          language
-        })
+      const response = await axiosInstance.post(`/api/coding/submit/${problemId}`, {
+        code,
+        language
       });
-
-      const results = await response.json();
-      setTestResults(results);
+      setTestResults(response.data);
     } catch (err) {
       setError('Failed to submit solution');
     } finally {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import ProfileForm from './ProfileForm';
 import QuizHistory from './QuizHistory';
 
@@ -14,7 +14,7 @@ function UserProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`https://lamback.onrender.com/api/profile/user/${userId}`);
+        const res = await axiosInstance.get(`/api/profile/user/${userId}`);
         setProfile(res.data);
         setLoading(false);
       } catch (err) {

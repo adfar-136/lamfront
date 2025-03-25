@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 
 const QuizAttempt = () => {
   const { techStackId, difficulty } = useParams();
@@ -14,33 +14,19 @@ const QuizAttempt = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [results, setResults] = useState(null);
 
-  // Add auth header helper
-  const getAuthHeader = () => {
-    const token = localStorage.getItem('token');
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-  };
-
   useEffect(() => {
     const startQuiz = async () => {
       try {
-        // Add auth headers to the request
-        const response = await axios.post('/api/practice/start', {
+        const response = await axiosInstance.post('/api/practice/start', {
           techStackId,
           difficulty
-        }, getAuthHeader()); // Add auth headers here
-
+        });
         setQuiz(response.data);
         setTimeLeft(response.data.questions[0].timeLimit);
         setLoading(false);
       } catch (err) {
         if (err.response?.status === 401) {
           setError('Please login to attempt the quiz');
-          // Optionally redirect to login page
-          // navigate('/login');
         } else {
           setError(err.response?.data?.message || 'Failed to start quiz');
         }
@@ -90,11 +76,9 @@ const QuizAttempt = () => {
 
   const submitQuiz = async (answers) => {
     try {
-      // Add auth headers to submit request
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/api/practice/submit/${quiz.attemptId}`, 
-        { answers },
-        getAuthHeader() // Add auth headers here
+        { answers }
       );
       setResults(response.data);
       setQuizCompleted(true);
