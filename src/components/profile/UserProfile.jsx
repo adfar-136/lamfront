@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axios';
 import ProfileForm from './ProfileForm';
-
-const DEFAULT_PROFILE_IMAGE = "https://placehold.co/400/DC2626/FFFFFF/png?text=User"; // Using red theme color
+import QuizHistory from './QuizHistory';
 
 function UserProfile() {
   const [profile, setProfile] = useState(null);
@@ -45,12 +44,8 @@ function UserProfile() {
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
             <img
               className="h-40 w-40 object-cover rounded-full border-4 border-white shadow-xl"
-              src={profile.image || DEFAULT_PROFILE_IMAGE}
-              alt={profile.fullName || "User Profile"}
-              onError={(e) => {
-                e.target.onerror = null; // Prevent infinite loop if default image also fails
-                e.target.src = DEFAULT_PROFILE_IMAGE;
-              }}
+              src={profile.image || 'https://via.placeholder.com/128'}
+              alt={profile.fullName}
             />
             <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold text-white mb-2">{profile.fullName}</h1>
@@ -160,6 +155,7 @@ function UserProfile() {
           </div>
         </div>
       </div>
+      <QuizHistory/>
     </div>
   );
 }
