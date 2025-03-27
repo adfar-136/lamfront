@@ -262,7 +262,9 @@ const Documentation = () => {
                   <li key={tech.slug}>
                     <button
                       onClick={() => setSelectedTech(tech)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedTech?.slug === tech.slug ? 'bg-indigo-50 text-indigo-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        selectedTech?.slug === tech.slug ? 'bg-red-50 text-red-600' : 'text-gray-600 hover:bg-gray-50'
+                      }`}
                     >
                       {tech.name}
                     </button>
@@ -272,7 +274,9 @@ const Documentation = () => {
                           <li key={topic.slug}>
                             <button
                               onClick={() => setSelectedTopic(topic)}
-                              className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedTopic?.slug === topic.slug ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50'}`}
+                              className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                                selectedTopic?.slug === topic.slug ? 'bg-red-50 text-red-600' : 'text-gray-500 hover:bg-gray-50'
+                              }`}
                             >
                               {topic.title}
                             </button>
@@ -291,7 +295,7 @@ const Documentation = () => {
             {selectedTopic ? ( 
               <div className="bg-white rounded-xl shadow-lg">
                 {/* Topic Header */}
-                <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white to-indigo-50 rounded-t-xl">
+                <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white to-red-50 rounded-t-xl">
                   <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
                     {selectedTopic.title}
                   </h1>
@@ -311,7 +315,7 @@ const Documentation = () => {
             ) : selectedTech ? (
               <div className="bg-white rounded-xl shadow-lg">
                 {/* Technology Header */}
-                <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white to-indigo-50 rounded-t-xl">
+                <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-white to-red-50 rounded-t-xl">
                   <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-4">
                     {selectedTech.name}
                   </h1>
@@ -327,14 +331,14 @@ const Documentation = () => {
                       <button
                         key={topic.slug}
                         onClick={() => setSelectedTopic(topic)}
-                        className="p-6 bg-white rounded-xl hover:bg-indigo-50 transition-all hover:shadow-lg text-left group border border-gray-200 relative overflow-hidden"
+                        className="p-6 bg-white rounded-xl hover:bg-red-50 transition-all hover:shadow-lg text-left group border border-gray-200 relative overflow-hidden"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-red-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <div className="relative z-10">
-                          <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-indigo-600">
+                          <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-red-600">
                             {topic.title}
                           </h3>
-                          <div className="flex items-center text-gray-500 group-hover:text-indigo-500">
+                          <div className="flex items-center text-gray-500 group-hover:text-red-500">
                             <span>Read more</span>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                               <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -356,17 +360,17 @@ const Documentation = () => {
                     <button
                       key={tech.slug}
                       onClick={() => setSelectedTech(tech)}
-                      className="p-6 bg-white rounded-xl hover:bg-indigo-50 transition-all hover:shadow-lg text-left group border border-gray-200 relative overflow-hidden"
+                      className="p-6 bg-white rounded-xl hover:bg-red-50 transition-all hover:shadow-lg text-left group border border-gray-200 relative overflow-hidden"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-red-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <div className="relative z-10">
-                        <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-indigo-600">
+                        <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-red-600">
                           {tech.name}
                         </h3>
                         <p className="text-gray-600 text-base mb-4">
                           {tech.description}
                         </p>
-                        <div className="flex items-center text-gray-500 group-hover:text-indigo-500">
+                        <div className="flex items-center text-gray-500 group-hover:text-red-500">
                           <span>View documentation</span>
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />

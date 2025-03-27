@@ -94,9 +94,9 @@ const CompanyRequirementForm = () => {
           <h2 className="mb-6 text-3xl font-bold text-center text-gray-900">Hire Educators</h2>
 
           {/* Instructions Section */}
-          <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="text-lg font-semibold text-blue-800 mb-3">Instructions</h3>
-            <ul className="space-y-2 text-blue-700">
+          <div className="mb-8 p-6 bg-red-50 rounded-lg border border-red-200">
+            <h3 className="text-lg font-semibold text-red-800 mb-3">Instructions</h3>
+            <ul className="space-y-2 text-red-700">
               <li>• Please provide accurate company information to help us understand your organization better.</li>
               <li>• Ensure your contact details are current as we'll use these for communication.</li>
               <li>• Be specific about your educator requirements, including technical expertise and experience level.</li>
@@ -245,7 +245,7 @@ const CompanyRequirementForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`w-full sm:w-auto px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
               </button>

@@ -70,33 +70,33 @@ const Contact = () => {
         <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Contact Information */}
-            <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-8 lg:p-12">
+            <div className="bg-gradient-to-br from-red-600 to-red-500 p-8 lg:p-12">
               <div className="text-white">
                 <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
-                <p className="text-indigo-100 mb-12">Fill up the form and our team will get back to you within 24 hours.</p>
+                <p className="text-red-100 mb-12">Fill up the form and our team will get back to you within 24 hours.</p>
 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <MapPinIcon className="w-6 h-6 text-indigo-200" />
+                    <MapPinIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Our Location</p>
-                      <p className="text-indigo-100">123 Business Avenue, New York, NY 10001</p>
+                      <p className="text-red-100">123 Business Avenue, New York, NY 10001</p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <PhoneIcon className="w-6 h-6 text-indigo-200" />
+                    <PhoneIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Phone Number</p>
-                      <p className="text-indigo-100">+1 (555) 123-4567</p>
+                      <p className="text-red-100">+1 (555) 123-4567</p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <EnvelopeIcon className="w-6 h-6 text-indigo-200" />
+                    <EnvelopeIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Email Address</p>
-                      <p className="text-indigo-100">contact@lamicons.com</p>
+                      <p className="text-red-100">contact@lamicons.com</p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-colors duration-200"
+                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200"
                     />
                   </div>
                   
@@ -135,7 +135,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-colors duration-200"
+                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200"
                     />
                   </div>
                   
@@ -148,7 +148,7 @@ const Contact = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-colors duration-200"
+                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200"
                     />
                   </div>
                   
@@ -161,7 +161,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-colors duration-200"
+                      className="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200"
                     ></textarea>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                    className={`w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>

@@ -25,7 +25,7 @@ const Practice = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
       </div>
     );
   }
@@ -44,7 +44,7 @@ const Practice = () => {
         
         <Link 
           to="/practice/add"
-          className="mt-4 inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="mt-4 inline-flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -73,7 +73,7 @@ const Practice = () => {
                     to={`/practice/${stack._id}/${level}`}
                     className={`block w-full text-center py-2 px-4 rounded-lg transition-colors ${
                       stack.questionCounts?.[level] > 0
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                        ? 'bg-red-500 hover:bg-red-600 text-white'
                         : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                     }`}
                     onClick={(e) => {

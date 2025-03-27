@@ -90,7 +90,7 @@ const QuizAttempt = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
       </div>
     );
   }
@@ -103,7 +103,7 @@ const QuizAttempt = () => {
           {error === 'Please login to attempt the quiz' && (
             <button
               onClick={() => navigate('/login')}
-              className="ml-4 text-blue-500 hover:text-blue-600"
+              className="ml-4 text-red-500 hover:text-red-600"
             >
               Go to Login
             </button>
@@ -119,7 +119,7 @@ const QuizAttempt = () => {
         <div className="bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-center mb-6">Quiz Results</h2>
           <div className="text-center mb-8">
-            <p className="text-4xl font-bold text-blue-600">
+            <p className="text-4xl font-bold text-red-600">
               Score: {results.totalScore}
             </p>
           </div>
@@ -151,7 +151,7 @@ const QuizAttempt = () => {
           <div className="mt-8 text-center">
             <button
               onClick={() => navigate('/practice')}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors"
             >
               Back to Practice
             </button>
@@ -171,7 +171,7 @@ const QuizAttempt = () => {
             Question {currentQuestion + 1} of {quiz.questions.length}
           </span>
           <span className={`text-sm font-medium ${
-            timeLeft <= 10 ? 'text-red-600' : 'text-blue-600'
+            timeLeft <= 10 ? 'text-red-600' : 'text-red-600'
           }`}>
             Time left: {timeLeft}s
           </span>
@@ -186,7 +186,7 @@ const QuizAttempt = () => {
                 key={index}
                 className={`w-full text-left p-4 rounded-lg transition-colors ${
                   selectedAnswers[currentQuestion] === index
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-red-500 text-white'
                     : 'bg-gray-50 hover:bg-gray-100'
                 }`}
                 onClick={() => handleAnswerSelect(index)}
@@ -200,7 +200,7 @@ const QuizAttempt = () => {
         <div className="flex justify-end">
           <button
             onClick={handleNextQuestion}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors"
           >
             {currentQuestion + 1 === quiz.questions.length ? 'Submit' : 'Next'}
           </button>

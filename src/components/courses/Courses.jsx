@@ -9,7 +9,7 @@ const courses = [
     description: 'Master the core fundamentals of modern web development. Learn HTML5, CSS3, and JavaScript through hands-on projects and real-world applications.',
     duration: '8 weeks',
     level: 'Beginner',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=Web+Development'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Web+Development'
   },
   {
     id: 'react-development',
@@ -17,7 +17,7 @@ const courses = [
     description: 'Take your React skills to the next level. Deep dive into hooks, state management, performance optimization, and advanced component patterns.',
     duration: '10 weeks',
     level: 'Advanced',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=React+Development'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=React+Development'
   },
   {
     id: 'node-development',
@@ -25,7 +25,7 @@ const courses = [
     description: 'Build robust and scalable backend applications. Learn Express.js, RESTful APIs, database integration, and server-side architecture.',
     duration: '12 weeks',
     level: 'Intermediate',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=Node.js'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Node.js'
   },
   {
     id: 'aws-cloud',
@@ -33,7 +33,7 @@ const courses = [
     description: 'Master cloud computing fundamentals and AWS services. Learn to deploy, scale, and manage applications in the cloud environment.',
     duration: '10 weeks',
     level: 'Intermediate',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=AWS+Cloud'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=AWS+Cloud'
   },
   {
     id: 'data-science',
@@ -41,7 +41,7 @@ const courses = [
     description: 'Explore the world of data science. Learn Python, data analysis, visualization, and machine learning basics with practical projects.',
     duration: '14 weeks',
     level: 'Beginner',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=Data+Science'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Data+Science'
   },
   {
     id: 'mobile-development',
@@ -49,7 +49,7 @@ const courses = [
     description: 'Create cross-platform mobile applications using React Native. Build and deploy apps for iOS and Android platforms.',
     duration: '12 weeks',
     level: 'Intermediate',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=Mobile+Development'
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Mobile+Development'
   }
 ];
 
@@ -82,8 +82,12 @@ const Courses = () => {
                   />
                 </div>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">{course.title}</h2>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${course.level === 'Beginner' ? 'bg-green-100 text-green-800' : course.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
+                  <h2 className="text-xl font-semibold text-gray-800 group-hover:text-red-600 transition-colors">{course.title}</h2>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    course.level === 'Beginner' ? 'bg-green-100 text-green-800' : 
+                    course.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' : 
+                    'bg-red-100 text-red-800'
+                  }`}>
                     {course.level}
                   </span>
                 </div>
@@ -96,7 +100,7 @@ const Courses = () => {
                   </svg>
                   <span>{course.duration}</span>
                 </div>
-                <div className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium group-hover:from-indigo-700 group-hover:to-purple-700 transition-all duration-300 transform group-hover:scale-[1.02] shadow-md group-hover:shadow-lg text-center">
+                <div className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-medium group-hover:from-red-600 group-hover:to-red-700 transition-all duration-300 transform group-hover:scale-[1.02] shadow-md group-hover:shadow-lg text-center">
                   View Course Details
                 </div>
               </div>

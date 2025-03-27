@@ -111,7 +111,7 @@ const AddQuiz = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
       </div>
     );
   }
@@ -168,7 +168,7 @@ const AddQuiz = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
               >
                 Add Tech Stack
               </button>
@@ -302,7 +302,7 @@ const AddQuiz = () => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors"
           >
             Add Question
           </button>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axios';
 import ProfileForm from './ProfileForm';
-import QuizHistory from './QuizHistory';
+
+const DEFAULT_PROFILE_IMAGE = "https://placehold.co/400/DC2626/FFFFFF/png?text=User"; // Using red theme color
 
 function UserProfile() {
   const [profile, setProfile] = useState(null);
@@ -40,20 +41,24 @@ function UserProfile() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-8">
+        <div className="bg-gradient-to-r from-red-500 to-red-600 p-8">
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
             <img
               className="h-40 w-40 object-cover rounded-full border-4 border-white shadow-xl"
-              src={profile.image || 'https://via.placeholder.com/128'}
-              alt={profile.fullName}
+              src={profile.image || DEFAULT_PROFILE_IMAGE}
+              alt={profile.fullName || "User Profile"}
+              onError={(e) => {
+                e.target.onerror = null; // Prevent infinite loop if default image also fails
+                e.target.src = DEFAULT_PROFILE_IMAGE;
+              }}
             />
             <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold text-white mb-2">{profile.fullName}</h1>
-              <p className="text-blue-100 text-lg">{profile.user.username}</p>
+              <p className="text-red-100 text-lg">{profile.user.username}</p>
             </div>
             <button
               onClick={handleEditToggle}
-              className="ml-auto bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+              className="ml-auto bg-white text-red-600 px-6 py-2 rounded-full font-semibold hover:bg-red-50 transition-colors"
             >
               Edit Profile
             </button>
@@ -93,7 +98,7 @@ function UserProfile() {
                       href={profile.linkedinUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors"
+                      className="flex items-center space-x-2 text-red-600 hover:text-red-700 transition-colors"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" />
@@ -126,7 +131,7 @@ function UserProfile() {
                     {profile.skills.map((skill, index) => (
                       <span
                         key={index}
-                        className="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium"
+                        className="bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-medium"
                       >
                         {skill}
                       </span>
@@ -140,7 +145,7 @@ function UserProfile() {
                   <h2 className="text-xl font-semibold mb-4 text-gray-800">Education</h2>
                   <div className="space-y-6">
                     {profile.education.map((edu, index) => (
-                      <div key={index} className="border-l-4 border-blue-500 pl-4 py-2">
+                      <div key={index} className="border-l-4 border-red-500 pl-4 py-2">
                         <h3 className="text-lg font-semibold text-gray-900">{edu.institution}</h3>
                         <p className="text-gray-700 mt-1">{edu.degree} in {edu.field}</p>
                         <p className="text-gray-500 text-sm mt-1">
@@ -155,7 +160,6 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <QuizHistory/>
     </div>
   );
 }

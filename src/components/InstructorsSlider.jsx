@@ -59,7 +59,7 @@ const InstructorsSlider = () => {
     <div className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center mb-12">
-          <h2 className="text-base text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold tracking-wide uppercase">Meet Our Experts</h2>
+          <h2 className="text-base text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-semibold tracking-wide uppercase">Meet Our Experts</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Learn from Industry Leaders
           </p>
@@ -71,7 +71,7 @@ const InstructorsSlider = () => {
         <div className="relative group">
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-indigo-600/30 hover:bg-indigo-600/50 text-white p-2 rounded-full transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             aria-label="Scroll left"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ const InstructorsSlider = () => {
 
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-indigo-600/30 hover:bg-indigo-600/50 text-white p-2 rounded-full transform translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             aria-label="Scroll right"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,17 +100,17 @@ const InstructorsSlider = () => {
                     <img
                       src={instructor.image}
                       alt={instructor.name}
-                      className="w-32 h-32 mx-auto rounded-full border-4 border-indigo-100 shadow-lg"
+                      className="w-32 h-32 mx-auto rounded-full border-4 border-red-100 shadow-lg"
                     />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{instructor.name}</h3>
-                  <p className="text-indigo-600 font-medium mb-3">{instructor.role}</p>
+                  <p className="text-red-600 font-medium mb-3">{instructor.role}</p>
                   <p className="text-gray-600 mb-4 text-sm">{instructor.bio}</p>
                   <a
                     href={instructor.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors"
                   >
                     Connect on LinkedIn
                     <svg
