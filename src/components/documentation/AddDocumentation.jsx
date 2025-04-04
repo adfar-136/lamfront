@@ -343,7 +343,7 @@ const AddDocumentation = () => {
       // Check if technology exists
       let techExists = false;
       try {
-        const techCheck = await axios.get(`http://localhost:8000/api/documentation/technologies/${formData.slug.trim().toLowerCase()}`);
+        const techCheck = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${formData.slug.trim().toLowerCase()}`);
         techExists = true;
       } catch (error) {
         if (error.response?.status !== 404) {
@@ -353,7 +353,7 @@ const AddDocumentation = () => {
 
       // If technology doesn't exist, create it
       if (!techExists) {
-        await axios.post('http://localhost:8000/api/documentation/technologies', {
+        await axios.post('https://lamback.onrender.com/api/documentation/technologies', {
           name: formData.name.trim(),
           slug: formData.slug.trim().toLowerCase(),
           description: formData.description.trim(),
@@ -382,7 +382,7 @@ const AddDocumentation = () => {
             })
           };
 
-          await axios.post(`http://localhost:8000/api/documentation/technologies/${formData.slug.trim().toLowerCase()}/topics`, processedTopic);
+          await axios.post(`https://lamback.onrender.com/api/documentation/technologies/${formData.slug.trim().toLowerCase()}/topics`, processedTopic);
         } catch (topicError) {
           if (topicError.response?.status === 400 && topicError.response?.data?.message?.includes('already exists')) {
             alert(`Topic '${topic.title}' already exists in this technology. Please use a different slug.`);
@@ -404,8 +404,8 @@ const AddDocumentation = () => {
     const fetchExistingContent = async () => {
       if (techSlug && topicSlug) {
         try {
-          const techResponse = await axios.get(`http://localhost:8000/api/documentation/technologies/${techSlug}`);
-          const topicResponse = await axios.get(`http://localhost:8000/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
+          const techResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}`);
+          const topicResponse = await axios.get(`https://lamback.onrender.com/api/documentation/technologies/${techSlug}/topics/${topicSlug}`);
           
           setSelectedTechnology(techResponse.data);
           setFormData(prev => ({
@@ -432,7 +432,7 @@ const AddDocumentation = () => {
 
     const fetchTechnologies = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/documentation/technologies');
+        const response = await axios.get('https://lamback.onrender.com/api/documentation/technologies');
         setTechnologies(response.data);
       } catch (error) {
         console.error('Error fetching technologies:', error);
