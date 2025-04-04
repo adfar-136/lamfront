@@ -27,36 +27,38 @@ function App() {
       <AuthProvider>
         <div className="min-h-screen bg-gray-50">
           <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute allowedRoles={['admin']}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/register" element={<AuthPage />} />
-            <Route path="/profile/:userId" element={<UserProfile />} />
-            <Route path="/courses" element={<ProtectedRoute allowedRoles={['student', 'admin']}><Courses /></ProtectedRoute>} />
-            <Route path="/courses/:courseId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><CourseDetail /></ProtectedRoute>} />
-            <Route path="/documentation" element={<Documentation />} />
-            <Route path="/documentation/:technology" element={<Documentation />} />
-            <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
-            <Route path="/add-doc" element={<AddDocumentation />} />
-            <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />
-            <Route path="/coding/:problemId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemSolving /></ProtectedRoute>} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/hire-educators" element={<CompanyRequirementForm/>} />
-            <Route path="/practice" element={<Practice />} />
-            <Route path="/practice/:techStackId/:difficulty" element={<QuizAttempt />} />
-            <Route path="/practice/add" element={<AddQuiz />} />
+          <div className="pt-20">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/register" element={<AuthPage />} />
+              <Route path="/profile/:userId" element={<UserProfile />} />
+              <Route path="/courses" element={<ProtectedRoute allowedRoles={['student', 'admin']}><Courses /></ProtectedRoute>} />
+              <Route path="/courses/:courseId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><CourseDetail /></ProtectedRoute>} />
+              <Route path="/documentation" element={<Documentation />} />
+              <Route path="/documentation/:technology" element={<Documentation />} />
+              <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
+              <Route path="/add-doc" element={<AddDocumentation />} />
+              <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />
+              <Route path="/coding/:problemId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemSolving /></ProtectedRoute>} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/hire-educators" element={<CompanyRequirementForm/>} />
+              <Route path="/practice" element={<Practice />} />
+              <Route path="/practice/:techStackId/:difficulty" element={<QuizAttempt />} />
+              <Route path="/practice/add" element={<AddQuiz />} />
 
-            {/* Add more routes as needed */}
-          </Routes>
+              {/* Add more routes as needed */}
+            </Routes>
+          </div>
           <Footer />
         </div>
       </AuthProvider>

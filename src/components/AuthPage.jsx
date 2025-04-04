@@ -249,10 +249,12 @@ const AuthPage = () => {
           </div>
         </div>
 
-        {/* Illustration Section */}
-        <div className={`w-1/2 bg-gradient-to-br from-red-600 to-purple-700 p-12 flex flex-col items-center justify-center absolute transition-all duration-500 ease-out ${isLogin ? 'right-0' : 'left-0'} h-full overflow-hidden`}>
+        {/* Illustration Section - Hidden on mobile */}
+        <div className={`w-1/2 bg-gradient-to-br from-red-600 to-purple-700 p-12 hidden md:flex flex-col items-center justify-center absolute transition-all duration-500 ease-out ${isLogin ? 'right-0' : 'left-0'} h-full overflow-hidden`}>
           <div className="text-white text-center z-10 flex flex-col items-center justify-center space-y-6">
-            <h3 className="text-4xl font-bold bg-gradient-to-r from-white to-red-200 bg-clip-text text-transparent">{isLogin ? 'Welcome to Lamicons!' : 'Join Lamicons Today!'}</h3>
+            <h3 className="text-4xl font-bold bg-gradient-to-r from-white to-red-200 bg-clip-text text-transparent">
+              {isLogin ? 'Welcome to Lamicons!' : 'Join Lamicons Today!'}
+            </h3>
             <p className="text-lg text-red-200">
               {isLogin ? 'Access your premium tech education journey' : 'Start your journey in tech education excellence'}
             </p>

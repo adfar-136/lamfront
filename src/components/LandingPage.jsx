@@ -6,36 +6,38 @@ import styles from './styles';
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-20">
       <style>{styles.jsx}</style>
       {/* Hero Section */}
-      <div className="relative flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="w-full lg:w-1/2 lg:pr-8">
-          <div className="relative z-10">
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block">Transform Your Career with</span>
-              <span className="block text-red-600">Expert Tech Education</span>
-            </h1>
-            <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
-              Access premium tech courses led by industry experts. Whether you're looking to learn or teach, Lamicons connects you with the best opportunities in tech education.
-            </p>
-            <div className="mt-5 sm:mt-8 sm:flex sm:justify-start">
-              <div className="rounded-md shadow">
-                <Link to="/courses" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 md:py-4 md:text-lg md:px-10">
-                  Explore Courses
-                </Link>
-              </div>
-              <div className="mt-3 sm:mt-0 sm:ml-3">
-                <Link to="/hire-educators" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 md:py-4 md:text-lg md:px-10">
-                  Hire Educators
-                </Link>
+      <div className="min-h-[calc(100vh-5rem)]">
+        <div className="relative flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="w-full lg:w-1/2 lg:pr-8">
+            <div className="relative z-10">
+              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                <span className="block">Transform Your Career with</span>
+                <span className="block text-red-600">Expert Tech Education</span>
+              </h1>
+              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
+                Access premium tech courses led by industry experts. Whether you're looking to learn or teach, Lamicons connects you with the best opportunities in tech education.
+              </p>
+              <div className="mt-5 sm:mt-8 sm:flex sm:justify-start">
+                <div className="rounded-md shadow">
+                  <Link to="/courses" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 md:py-4 md:text-lg md:px-10">
+                    Explore Courses
+                  </Link>
+                </div>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <Link to="/hire-educators" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 md:py-4 md:text-lg md:px-10">
+                    Hire Educators
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-full lg:w-1/2 mt-10 lg:mt-0">
-          <div className="relative rounded-bl-3xl shadow-2xl overflow-hidden">
-            <img src="/landing.jpg" alt="Tech Education" className="w-full h-[400px] sm:h-[500px] object-cover object-center transform hover:scale-105 transition-transform duration-500" />
+          <div className="w-full lg:w-1/2 mt-10 lg:mt-0">
+            <div className="relative rounded-bl-3xl shadow-2xl overflow-hidden">
+              <img src="/landing.jpg" alt="Tech Education" className="w-full h-[400px] sm:h-[500px] object-cover object-center transform hover:scale-105 transition-transform duration-500" />
+            </div>
           </div>
         </div>
       </div>
