@@ -70,9 +70,9 @@ const Navbar = () => {
             <Link to="/practice" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300">
               Interview Prep
             </Link>
-            <Link to="/coding" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300">
+            {/* <Link to="/coding" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300">
               Coding Practice
-            </Link>
+            </Link> */}
             <Link to="/contact" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300">
               Contact
             </Link>
@@ -158,7 +158,7 @@ const Navbar = () => {
             { to: "/courses", text: "Courses" },
             { to: "/documentation", text: "Documentation" },
             { to: "/practice", text: "Interview Prep" },
-            { to: "/coding", text: "Coding Practice" },
+            // { to: "/coding", text: "Coding Practice" },
             { to: "/contact", text: "Contact" },
             { to: "/about", text: "About" },
           ].map((link) => (

@@ -336,7 +336,7 @@ const LandingPage = () => {
       </div>
 
       {/* Team Section */}
-      <TeamSection />
+      {/* <TeamSection /> */}
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-red-700 to-red-600">

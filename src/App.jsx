@@ -41,20 +41,29 @@ function App() {
               <Route path="/login" element={<AuthPage />} />
               <Route path="/register" element={<AuthPage />} />
               <Route path="/profile/:userId" element={<UserProfile />} />
-              <Route path="/courses" element={<ProtectedRoute allowedRoles={['student', 'admin']}><Courses /></ProtectedRoute>} />
-              <Route path="/courses/:courseId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><CourseDetail /></ProtectedRoute>} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/:courseId" element={<CourseDetail />} />
               <Route path="/documentation" element={<Documentation />} />
               <Route path="/documentation/:technology" element={<Documentation />} />
               <Route path="/documentation/:technology/:topicId" element={<Documentation />} />
-              <Route path="/add-doc" element={<AddDocumentation />} />
-              <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />
-              <Route path="/coding/:problemId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemSolving /></ProtectedRoute>} />
+              <Route 
+                path="/add-doc" 
+                element={
+                  <ProtectedRoute>
+                    <AddDocumentation />
+                  </ProtectedRoute>
+                } 
+              />
+              {/* <Route path="/coding" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemArchive /></ProtectedRoute>} />
+              <Route path="/coding/:problemId" element={<ProtectedRoute allowedRoles={['student', 'admin']}><ProblemSolving /></ProtectedRoute>} /> */}
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/hire-educators" element={<CompanyRequirementForm/>} />
               <Route path="/practice" element={<Practice />} />
               <Route path="/practice/:techStackId/:difficulty" element={<QuizAttempt />} />
-              <Route path="/practice/add" element={<AddQuiz />} />
+              <Route path="/practice/add" element={<ProtectedRoute>
+                <AddQuiz />
+              </ProtectedRoute>} />
 
               {/* Add more routes as needed */}
             </Routes>

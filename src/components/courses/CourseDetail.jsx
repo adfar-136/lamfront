@@ -1,239 +1,538 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import EnrollmentForm from './EnrollmentForm';
 
 const courses = {
-  'web-development': {
-    title: 'Introduction to Web Development',
-    description: 'Master the core fundamentals of modern web development. Learn HTML5, CSS3, and JavaScript through hands-on projects and real-world applications.',
-    duration: '8 weeks',
+  'frontend-fundamentals': {
+    title: 'Frontend Development Fundamentals',
+    description: 'A comprehensive course covering HTML5, CSS3, and JavaScript. Learn to build modern, responsive websites from scratch. This course combines theoretical knowledge with practical projects to ensure you are job-ready.',
+    duration: '12 weeks',
     level: 'Beginner',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=Web+Development',
+    price: '₹4,999',
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Frontend+Development',
     instructor: {
-      name: 'John Smith',
-      role: 'Senior Web Developer',
-      image: 'https://placehold.co/200x200/3730A3/FFFFFF/png?text=JS'
+      name: 'Adfar Rasheed',
+      role: 'Senior Frontend Developer',
+      image: 'https://placehold.co/200x200/DC2626/FFFFFF/png?text=AR',
+      bio: 'With over 6 years of experience in frontend development, Adfar has worked with numerous startups and enterprises, helping them build scalable web applications.'
     },
     prerequisites: [
       'Basic computer knowledge',
       'Understanding of internet concepts',
-      'No prior coding experience required'
+      'No prior coding experience required',
+      'Laptop with internet connection'
     ],
     curriculum: [
       {
         week: 1,
-        title: 'Introduction to HTML5',
+        title: 'Web Development Fundamentals & HTML5',
         topics: [
-          'Understanding web fundamentals',
-          'HTML document structure',
-          'Working with text and links',
-          'Images and multimedia'
+          'Understanding how the web works',
+          'HTML5 document structure and semantics',
+          'Forms and validation',
+          'SEO best practices'
         ]
       },
       {
         week: 2,
-        title: 'Styling with CSS3',
+        title: 'CSS3 Fundamentals',
         topics: [
-          'CSS syntax and selectors',
+          'CSS selectors and specificity',
           'Box model and layouts',
-          'Colors and typography',
-          'Responsive design basics'
+          'Flexbox and Grid systems',
+          'Responsive design principles'
         ]
       },
       {
         week: 3,
-        title: 'JavaScript Fundamentals',
+        title: 'CSS Advanced Concepts',
         topics: [
-          'Variables and data types',
-          'Control structures',
-          'Functions and scope',
-          'DOM manipulation'
+          'CSS animations and transitions',
+          'CSS variables and custom properties',
+          'CSS preprocessors (SASS)',
+          'CSS frameworks introduction'
         ]
       },
       {
         week: 4,
-        title: 'Advanced JavaScript',
+        title: 'JavaScript Basics',
         topics: [
-          'ES6+ features',
-          'Promises and async/await',
-          'Error handling',
-          'Working with APIs'
+          'Variables, data types, and operators',
+          'Control structures and loops',
+          'Functions and scope',
+          'Arrays and objects'
         ]
       },
       {
         week: 5,
-        title: 'Frontend Frameworks',
+        title: 'JavaScript DOM Manipulation',
         topics: [
-          'Introduction to React',
-          'Components and props',
-          'State management',
-          'Routing'
+          'DOM traversal and manipulation',
+          'Event handling',
+          'Local storage',
+          'Form validation with JavaScript'
         ]
       },
       {
         week: 6,
-        title: 'Backend Basics',
+        title: 'Modern JavaScript',
         topics: [
-          'Server concepts',
-          'RESTful APIs',
-          'Database fundamentals',
-          'Authentication basics'
+          'ES6+ features',
+          'Promises and async/await',
+          'Fetch API and AJAX',
+          'Error handling'
         ]
       },
       {
         week: 7,
-        title: 'Project Development',
+        title: 'Responsive Web Design',
         topics: [
-          'Project planning',
-          'Implementation',
-          'Testing and debugging',
-          'Performance optimization'
+          'Mobile-first design approach',
+          'Media queries',
+          'Responsive images and videos',
+          'CSS Grid layouts'
         ]
       },
       {
         week: 8,
-        title: 'Deployment and Beyond',
+        title: 'Web Performance',
         topics: [
-          'Deployment strategies',
-          'Version control with Git',
-          'CI/CD basics',
-          'Career guidance'
+          'Performance optimization techniques',
+          'Image optimization',
+          'Lazy loading',
+          'Caching strategies'
+        ]
+      },
+      {
+        week: 9,
+        title: 'Version Control & Deployment',
+        topics: [
+          'Git basics',
+          'GitHub workflow',
+          'Deployment platforms',
+          'CI/CD introduction'
+        ]
+      },
+      {
+        week: 10,
+        title: 'Frontend Build Tools',
+        topics: [
+          'NPM basics',
+          'Webpack fundamentals',
+          'Babel configuration',
+          'Development workflows'
+        ]
+      },
+      {
+        week: 11,
+        title: 'Project Week 1',
+        topics: [
+          'Portfolio website development',
+          'E-commerce homepage creation',
+          'Code review sessions',
+          'Performance optimization'
+        ]
+      },
+      {
+        week: 12,
+        title: 'Project Week 2 & Career Prep',
+        topics: [
+          'Project completion and deployment',
+          'Code documentation',
+          'Portfolio preparation',
+          'Interview preparation'
         ]
       }
     ],
     outcomes: [
       'Build responsive websites from scratch',
-      'Understand modern web development practices',
-      'Create interactive web applications',
-      'Work with popular development tools',
-      'Deploy and maintain web applications'
+      'Implement modern CSS layouts using Flexbox and Grid',
+      'Create interactive web applications using JavaScript',
+      'Debug and optimize frontend code',
+      'Deploy websites to production',
+      'Work with version control systems',
+      'Create a professional portfolio'
+    ],
+    projects: [
+      'Personal Portfolio Website',
+      'E-commerce Product Page',
+      'Interactive Dashboard',
+      'Social Media Clone'
     ]
   },
-  'react-development': {
-    title: 'Advanced React Development',
-    description: 'Take your React skills to the next level. Deep dive into hooks, state management, performance optimization, and advanced component patterns.',
-    duration: '10 weeks',
-    level: 'Advanced',
-    image: 'https://placehold.co/600x400/3730A3/FFFFFF/png?text=React+Development',
+  'react-mastery': {
+    title: 'React.js Mastery',
+    description: 'Advanced React course covering modern practices, state management, and production-ready application development. Learn from real-world projects and industry experts.',
+    duration: '16 weeks',
+    level: 'Intermediate',
+    price: '₹7,999',
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=React+Mastery',
     instructor: {
-      name: 'Sarah Johnson',
-      role: 'React Technical Lead',
-      image: 'https://placehold.co/200x200/3730A3/FFFFFF/png?text=SJ'
+      name: 'Rishabh Sharma',
+      role: 'Lead React Developer',
+      image: 'https://placehold.co/200x200/DC2626/FFFFFF/png?text=RS',
+      bio: 'Rishabh is a seasoned React developer with 5+ years of experience in building large-scale applications. He currently leads frontend development at a prominent tech startup.'
     },
     prerequisites: [
-      'Solid understanding of JavaScript',
-      'Basic React knowledge',
-      'Experience with npm/yarn',
-      'Familiarity with ES6+ features'
+      'Strong JavaScript fundamentals',
+      'Understanding of HTML & CSS',
+      'Basic command line knowledge',
+      'Familiarity with Git'
     ],
     curriculum: [
       {
         week: 1,
-        title: 'Modern React Fundamentals',
+        title: 'React Fundamentals',
         topics: [
-          'React 18 features',
-          'Virtual DOM and Fiber',
-          'JSX in depth',
-          'Component lifecycle'
+          'Introduction to React and its ecosystem',
+          'Virtual DOM and JSX',
+          'Components and props',
+          'State and lifecycle methods'
         ]
       },
       {
         week: 2,
-        title: 'Hooks Mastery',
+        title: 'React Hooks Deep Dive',
         topics: [
           'useState and useEffect',
-          'Custom hooks',
-          'Context and reducers',
+          'Custom hooks development',
+          'useContext and useReducer',
           'Performance hooks'
         ]
       },
       {
         week: 3,
-        title: 'State Management',
+        title: 'Advanced Component Patterns',
         topics: [
-          'Redux toolkit',
-          'Zustand',
-          'Jotai',
-          'State management patterns'
+          'Higher-Order Components',
+          'Render Props',
+          'Component Composition',
+          'Error Boundaries'
         ]
       },
       {
         week: 4,
-        title: 'Performance Optimization',
+        title: 'State Management',
         topics: [
-          'React profiler',
-          'Memo and callbacks',
-          'Code splitting',
-          'Lazy loading'
+          'Context API patterns',
+          'Redux fundamentals',
+          'Redux Toolkit',
+          'Zustand and alternatives'
         ]
       },
       {
         week: 5,
-        title: 'Testing and Quality',
+        title: 'Routing & Navigation',
         topics: [
-          'Jest and React Testing Library',
-          'Integration testing',
-          'E2E with Cypress',
-          'Test-driven development'
+          'React Router v6',
+          'Protected routes',
+          'Dynamic routing',
+          'Navigation patterns'
         ]
       },
       {
         week: 6,
-        title: 'Advanced Patterns',
+        title: 'Forms & Validation',
         topics: [
-          'Compound components',
-          'Render props',
-          'Higher-order components',
-          'Custom hooks patterns'
+          'Form handling patterns',
+          'React Hook Form',
+          'Formik and Yup',
+          'Advanced validation'
         ]
       },
       {
         week: 7,
-        title: 'Data Fetching',
+        title: 'API Integration',
         topics: [
+          'Axios and API calls',
           'React Query',
-          'SWR',
-          'GraphQL with Apollo',
-          'Data caching strategies'
+          'SWR for data fetching',
+          'Error handling patterns'
         ]
       },
       {
         week: 8,
-        title: 'Animation and Styling',
+        title: 'Testing React Applications',
         topics: [
-          'Framer Motion',
-          'CSS-in-JS',
-          'Styled Components',
-          'Animation patterns'
+          'Jest and React Testing Library',
+          'Component testing',
+          'Integration testing',
+          'E2E testing with Cypress'
         ]
       },
       {
         week: 9,
-        title: 'Advanced Routing',
+        title: 'Performance Optimization',
         topics: [
-          'React Router v6',
-          'Protected routes',
-          'Route transitions',
-          'Data routing'
+          'React profiler',
+          'Code splitting',
+          'Lazy loading',
+          'Memoization techniques'
         ]
       },
       {
         week: 10,
-        title: 'Project and Deployment',
+        title: 'Styling in React',
         topics: [
-          'Project architecture',
-          'Performance monitoring',
+          'CSS-in-JS',
+          'Styled Components',
+          'Tailwind CSS',
+          'Theme management'
+        ]
+      },
+      {
+        week: 11,
+        title: 'Next.js Fundamentals',
+        topics: [
+          'Server-side rendering',
+          'Static site generation',
+          'API routes',
+          'Next.js features'
+        ]
+      },
+      {
+        week: 12,
+        title: 'Authentication & Authorization',
+        topics: [
+          'JWT implementation',
+          'OAuth integration',
+          'Role-based access',
+          'Security best practices'
+        ]
+      },
+      {
+        week: 13,
+        title: 'Deployment & CI/CD',
+        topics: [
+          'Build optimization',
           'Deployment strategies',
-          'Maintenance and updates'
+          'CI/CD pipeline setup',
+          'Monitoring and analytics'
+        ]
+      },
+      {
+        week: 14,
+        title: 'Project Week 1',
+        topics: [
+          'E-commerce application',
+          'State management implementation',
+          'API integration',
+          'Testing setup'
+        ]
+      },
+      {
+        week: 15,
+        title: 'Project Week 2',
+        topics: [
+          'Dashboard development',
+          'Performance optimization',
+          'Authentication implementation',
+          'Error handling'
+        ]
+      },
+      {
+        week: 16,
+        title: 'Project Completion & Career Prep',
+        topics: [
+          'Project deployment',
+          'Documentation',
+          'Code review',
+          'Interview preparation'
         ]
       }
     ],
     outcomes: [
       'Build complex React applications',
       'Implement advanced state management',
-      'Optimize React performance',
       'Create reusable component libraries',
-      'Deploy and monitor React apps'
+      'Master React hooks and patterns',
+      'Deploy and optimize React apps',
+      'Write testable React code',
+      'Work with Next.js'
+    ],
+    projects: [
+      'E-commerce Platform',
+      'Admin Dashboard',
+      'Social Media Application',
+      'Real-time Chat Application'
+    ]
+  },
+  'nodejs-backend': {
+    title: 'Node.js Backend Development',
+    description: 'Master backend development with Node.js. Learn to build scalable servers, RESTful APIs, handle authentication, and work with databases.',
+    duration: '14 weeks',
+    level: 'Intermediate',
+    price: '₹6,999',
+    image: 'https://placehold.co/600x400/DC2626/FFFFFF/png?text=Node.js+Backend',
+    instructor: {
+      name: 'Adfar Rasheed',
+      role: 'Full Stack Developer',
+      image: 'https://placehold.co/200x200/DC2626/FFFFFF/png?text=AR',
+      bio: 'Adfar brings his extensive experience in both frontend and backend development, specializing in building scalable Node.js applications and microservices.'
+    },
+    prerequisites: [
+      'JavaScript fundamentals',
+      'Understanding of async programming',
+      'Basic understanding of databases',
+      'Command line familiarity'
+    ],
+    curriculum: [
+      {
+        week: 1,
+        title: 'Node.js Fundamentals',
+        topics: [
+          'Node.js architecture',
+          'Event loop and async programming',
+          'Modules and npm',
+          'File system operations'
+        ]
+      },
+      {
+        week: 2,
+        title: 'Express.js Framework',
+        topics: [
+          'Express.js basics',
+          'Routing and middleware',
+          'Error handling',
+          'Template engines'
+        ]
+      },
+      {
+        week: 3,
+        title: 'RESTful API Development',
+        topics: [
+          'REST principles',
+          'API design patterns',
+          'CRUD operations',
+          'API documentation'
+        ]
+      },
+      {
+        week: 4,
+        title: 'Database Integration',
+        topics: [
+          'MongoDB setup',
+          'Mongoose ODM',
+          'Schema design',
+          'CRUD operations'
+        ]
+      },
+      {
+        week: 5,
+        title: 'Authentication & Authorization',
+        topics: [
+          'JWT implementation',
+          'Passport.js',
+          'OAuth integration',
+          'Role-based access'
+        ]
+      },
+      {
+        week: 6,
+        title: 'Advanced MongoDB',
+        topics: [
+          'Aggregation pipeline',
+          'Indexing',
+          'Transactions',
+          'Performance optimization'
+        ]
+      },
+      {
+        week: 7,
+        title: 'Security',
+        topics: [
+          'Common vulnerabilities',
+          'Security best practices',
+          'Data validation',
+          'Rate limiting'
+        ]
+      },
+      {
+        week: 8,
+        title: 'File Upload & Processing',
+        topics: [
+          'Multer implementation',
+          'Image processing',
+          'Cloud storage',
+          'Stream handling'
+        ]
+      },
+      {
+        week: 9,
+        title: 'Email & Notifications',
+        topics: [
+          'Nodemailer setup',
+          'Email templates',
+          'Push notifications',
+          'SMS integration'
+        ]
+      },
+      {
+        week: 10,
+        title: 'Testing',
+        topics: [
+          'Unit testing with Jest',
+          'Integration testing',
+          'API testing',
+          'Test coverage'
+        ]
+      },
+      {
+        week: 11,
+        title: 'Deployment & DevOps',
+        topics: [
+          'Docker basics',
+          'CI/CD pipeline',
+          'Cloud deployment',
+          'Monitoring'
+        ]
+      },
+      {
+        week: 12,
+        title: 'Performance & Scaling',
+        topics: [
+          'Caching strategies',
+          'Load balancing',
+          'Microservices intro',
+          'Database scaling'
+        ]
+      },
+      {
+        week: 13,
+        title: 'Project Week 1',
+        topics: [
+          'E-commerce backend',
+          'Payment integration',
+          'Order management',
+          'User system'
+        ]
+      },
+      {
+        week: 14,
+        title: 'Project Week 2 & Career Prep',
+        topics: [
+          'Project completion',
+          'Documentation',
+          'Deployment',
+          'Interview preparation'
+        ]
+      }
+    ],
+    outcomes: [
+      'Build scalable Node.js applications',
+      'Design and implement RESTful APIs',
+      'Work with MongoDB and Mongoose',
+      'Implement authentication systems',
+      'Deploy and monitor Node.js apps',
+      'Handle file uploads and processing',
+      'Implement security best practices'
+    ],
+    projects: [
+      'E-commerce Backend',
+      'Social Media API',
+      'Content Management System',
+      'Real-time Chat Backend'
     ]
   }
 };
@@ -242,6 +541,7 @@ const CourseDetail = () => {
   const { courseId } = useParams();
   const { user } = useAuth();
   const course = courses[courseId];
+  const [showEnrollForm, setShowEnrollForm] = useState(false);
 
   if (!course) {
     return (
@@ -370,13 +670,23 @@ const CourseDetail = () => {
 
             {/* Enroll Button */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button 
+                onClick={() => setShowEnrollForm(true)}
+                className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-medium hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-[1.02]"
+              >
                 Enroll Now
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {showEnrollForm && (
+        <EnrollmentForm 
+          course={course} 
+          onClose={() => setShowEnrollForm(false)} 
+        />
+      )}
     </div>
   );
 };
