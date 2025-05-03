@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 // Create axios instance with default config
 const axiosInstance = axios.create({
-  baseURL: window.env?.REACT_APP_API_URL || 'https://lamback.onrender.com',
+  baseURL: 'https://lamback.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },

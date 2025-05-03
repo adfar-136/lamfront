@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../../utils/axios';
 import ProfileForm from './ProfileForm';
 import QuizHistory from './QuizHistory';
+import { useAuth } from '../../contexts/AuthContext';
 
 function UserProfile() {
   const [profile, setProfile] = useState(null);
@@ -10,31 +11,44 @@ function UserProfile() {
   const [error, setError] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const { userId } = useParams();
+  const { user } = useAuth();
+
+  const fetchProfile = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await axiosInstance.get(`/api/profile/user/${userId}`);
+      setProfile(res.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error fetching profile');
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await axiosInstance.get(`/api/profile/user/${userId}`);
-        setProfile(res.data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.response?.data?.message || 'Error fetching profile');
-        setLoading(false);
-      }
-    };
     fetchProfile();
+    // eslint-disable-next-line
   }, [userId]);
-
-  if (loading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center min-h-screen flex items-center justify-center">{error}</div>;
-  if (!profile) return <div className="text-center min-h-screen flex items-center justify-center">Profile not found</div>;
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
 
-  if (isEditing) {
-    return <ProfileForm initialData={profile} onCancel={handleEditToggle} />;
+  const handleProfileUpdated = () => {
+    setIsEditing(false);
+    fetchProfile();
+  };
+
+  if (loading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  if (error) return <div className="text-red-500 text-center min-h-screen flex items-center justify-center">{error}</div>;
+  if (!profile) return <div className="text-center min-h-screen flex items-center justify-center">Profile not found</div>;
+
+  // Only allow editing if current user is viewing their own profile
+  const canEdit = user && profile.user && (user._id === profile.user._id || user.id === profile.user._id);
+
+  if (isEditing && canEdit) {
+    return <ProfileForm initialData={profile} onCancel={handleEditToggle} onSuccess={handleProfileUpdated} />;
   }
 
   return (
@@ -51,15 +65,16 @@ function UserProfile() {
               <h1 className="text-3xl font-bold text-white mb-2">{profile.fullName}</h1>
               <p className="text-red-100 text-lg">{profile.user.username}</p>
             </div>
-            <button
-              onClick={handleEditToggle}
-              className="ml-auto bg-white text-red-600 px-6 py-2 rounded-full font-semibold hover:bg-red-50 transition-colors"
-            >
-              Edit Profile
-            </button>
+            {canEdit && (
+              <button
+                onClick={handleEditToggle}
+                className="ml-auto bg-white text-red-600 px-6 py-2 rounded-full font-semibold hover:bg-red-50 transition-colors"
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
         </div>
-
         <div className="p-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
@@ -84,7 +99,6 @@ function UserProfile() {
                   </div>
                 </div>
               </div>
-
               <div className="mt-6 bg-gray-50 rounded-xl p-6 shadow-sm">
                 <h2 className="text-xl font-semibold mb-4 text-gray-800">Professional Links</h2>
                 <div className="space-y-3">
@@ -117,7 +131,6 @@ function UserProfile() {
                 </div>
               </div>
             </div>
-
             <div className="lg:col-span-2">
               {profile.skills && profile.skills.length > 0 && (
                 <div className="bg-gray-50 rounded-xl p-6 shadow-sm mb-6">
@@ -134,7 +147,6 @@ function UserProfile() {
                   </div>
                 </div>
               )}
-
               {profile.education && profile.education.length > 0 && (
                 <div className="bg-gray-50 rounded-xl p-6 shadow-sm">
                   <h2 className="text-xl font-semibold mb-4 text-gray-800">Education</h2>
@@ -155,7 +167,7 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <QuizHistory/>
+      {canEdit && <QuizHistory/>}
     </div>
   );
 }
