@@ -36,7 +36,7 @@ const LandingPage = () => {
           </div>
           <div className="w-full lg:w-1/2 mt-10 lg:mt-0">
             <div className="relative rounded-bl-3xl shadow-2xl overflow-hidden">
-              <img src="/landing.jpg" alt="Tech Education" className="w-full h-[400px] sm:h-[500px] object-cover object-center transform hover:scale-105 transition-transform duration-500" />
+              <img src="homee.jpg" alt="Tech Education" className="w-full h-[400px] sm:h-[500px] object-cover object-center transform hover:scale-105 transition-transform duration-500" />
             </div>
           </div>
         </div>

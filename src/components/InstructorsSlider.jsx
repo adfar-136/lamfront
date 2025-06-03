@@ -6,61 +6,110 @@ const instructors = [
     id: 1,
     name: 'Adfar Rasheed',
     role: 'AI & MERN Stack Expert',
-    image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=AR',
+    image: 'adfar.jpg',
     bio: 'Founder of Variableverse, MERN Stack instructor & Generative AI educator with 7+ years of experience.',
     linkedin: 'https://www.linkedin.com/in/adfar-rasheed/',
   },
+  
   {
-      id: 2,
-      name: 'Mustansir Nisar',
-      role: 'AI & Machine Learning Expert',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=MN',
-      bio: 'Artificial Intelligence and Machine Learning Researcher with 3+ years of experience specializing in AI, ML, and Deep Learning.',
-      linkedin: 'https://www.linkedin.com/in/mustansirnisar',
-    }
-  ,
-  {
-    id: 3,
+    id: 2,
     name: 'Mohammad Idrees',
     role: 'Tech Skills Trainer',
-    image: 'https://placehold.co/400x400/10B981/FFFFFF/png?text=MI',
+    image: 'idrees.jpg',
     bio: 'Senior EdTech Consultant, SME for AI/ML, Data Analytics trainer at Takeo, UI/UX trainer at UpGrad.',
     linkedin: 'https://www.linkedin.com/in/midreesbhat',
   },
   {
-    id: 4,
+    id: 3,
     name: 'Dinesh Shah',
     role: 'SDE-2',
-    image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=DS',
+    image: 'Dinesh.png',
     bio: 'Software Development Engineer at Tekion Corp with 2+ years of experience in building scalable web applications and microservices using the MERN stack.',
     linkedin: 'https://www.linkedin.com/in/dinesh-shah-02b10921b/',
   },
   {
-    id: 5,
+    id: 4,
     name: 'Jitmanew Tyagi',
     role: 'SDE-2',
-    image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=JT',
+    image: 'Jitmanew.png',
     bio: 'Software Development Engineer 2 at AstroTalk, with past experience at 6thStreet and Pepcoding, specializing in scalable backend systems, financial services, and user retention solutions.',
     linkedin: 'https://www.linkedin.com/in/jitmanew-tyagi/',
   },
   {
+    id: 5,
+    name: 'Mustansir Nisar',
+    role: 'AI & Machine Learning Expert',
+    image: 'mustansir.jpg',
+    bio: 'Artificial Intelligence and Machine Learning Researcher with 3+ years of experience specializing in AI, ML, and Deep Learning.',
+    linkedin: 'https://www.linkedin.com/in/mustansirnisar',
+  }
+,
+  {
     id: 6,
     name: 'Shivendu Tyagi',
     role: 'Developer',
-    image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=ST',
+    image: 'Shivendu.png',
     bio: 'Developer at Brevo with 3.5 years of teaching experience, a strong foundation in DSA, and a career journey from QA to software development.',
     linkedin: 'https://www.linkedin.com/in/shivendu-tyagi/',
   },
   {
     id: 7,
+    name: 'Divya Goyal',
+    role: 'MERN Stack Instructor',
+    image: 'divya.jpg',
+    bio: 'Experienced MERN Stack developer and mentor passionate about building scalable web applications.',
+    linkedin: 'https://www.linkedin.com/in/divya-goyal/', // Replace with actual LinkedIn URL if available
+  },
+  {
+    id: 8,
+    name: 'Ankit Prajapati',
+    role: 'DSA Instructor',
+    image: 'AnkitP.png',
+    bio: 'Skilled in Data Structures & Algorithms with a strong background in problem solving and teaching.',
+    linkedin: 'https://www.linkedin.com/in/ankit-prajapati/', // Replace with actual LinkedIn URL if available
+  },
+  {
+    id: 9,
+    name: 'Akash Singh',
+    role: 'DSA Instructor',
+    image: 'akash.jpeg',
+    bio: 'Passionate about competitive programming and teaching core computer science fundamentals.',
+    linkedin: 'https://www.linkedin.com/in/akash-singh-b18153120/', // Replace with actual LinkedIn URL if available
+  },
+  {
+    id: 10,
+    name: 'Rishabh Shukla',
+    role: 'DSA Instructor',
+    image: 'rishabh.jpg',
+    bio: 'Expert in algorithmic thinking with a focus on helping students crack coding interviews.',
+    linkedin: 'https://www.linkedin.com/in/rishabh-shukla/', // Replace with actual LinkedIn URL if available
+  },
+  {
+    id: 11,
+    name: 'Vishnu Mohan Singh',
+    role: 'Java Full Stack Instructor',
+    image: 'vishnu.jpg',
+    bio: 'Proficient Java Full Stack developer and educator with a passion for backend technologies.',
+    linkedin: 'https://www.linkedin.com/in/vishnu-mohan-singh/', // Replace with actual LinkedIn URL if available
+  },
+  {
+    id: 12,
+    name: 'Vikash Tiwary',
+    role: 'Java Full Stack Instructor',
+    image: 'vikash.jpg',
+    bio: 'Dedicated full stack Java instructor focused on real-world application and hands-on learning.',
+    linkedin: 'https://www.linkedin.com/in/vikash-tiwary/', // Replace with actual LinkedIn URL if available
+  },    
+  {
+    id: 13,
     name: 'Shubham Shrivastava',
     role: 'Software Developer',
-    image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=SS',
+    image: 'Shubham.png',
     bio: 'Software Developer at Extramarks with 10+ years of diverse experience across web development, manufacturing operations, and security systems, skilled in MERN stack, Django, and agile methodologies.',
     linkedin: 'https://www.linkedin.com/in/shivendu-tyagi/', // Note: This LinkedIn is duplicated from Shivendu; you may want to update it.
   }
-  
 ];
+
 
 const InstructorsSlider = () => {
   const scrollContainer = React.useRef(null);

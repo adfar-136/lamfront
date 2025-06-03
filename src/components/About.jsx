@@ -72,94 +72,116 @@ const About = () => {
     },
   ];
 
-  const studentTestimonials = [
+  const teamMembers = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      role: 'Full Stack Developer at Google',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=SJ',
-      content: 'Lamicons helped me transition from a junior developer to a full stack role at Google. The structured learning path and expert guidance made all the difference.',
-      rating: 5,
+      name: 'Adfar Rasheed',
+      role: 'AI & MERN Stack Expert',
+      image: 'adfar.jpg',
+      bio: 'Founder of Variableverse, MERN Stack instructor & Generative AI educator with 7+ years of experience.',
+      linkedin: 'https://www.linkedin.com/in/adfar-rasheed/',
     },
+    
     {
       id: 2,
-      name: 'Michael Chen',
-      role: 'Data Scientist at Amazon',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=MC',
-      content: 'The data science course was comprehensive and practical. The hands-on projects prepared me well for my current role at Amazon.',
-      rating: 5,
+      name: 'Mohammad Idrees',
+      role: 'Tech Skills Trainer',
+      image: 'idrees.jpg',
+      bio: 'Senior EdTech Consultant, SME for AI/ML, Data Analytics trainer at Takeo, UI/UX trainer at UpGrad.',
+      linkedin: 'https://www.linkedin.com/in/midreesbhat',
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      role: 'ML Engineer at Microsoft',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=ER',
-      content: 'The machine learning course content was cutting-edge and the instructors were incredibly knowledgeable. Highly recommend!',
-      rating: 5,
+      name: 'Dinesh Shah',
+      role: 'SDE-2',
+      image: 'Dinesh.png',
+      bio: 'Software Development Engineer at Tekion Corp with 2+ years of experience in building scalable web applications and microservices using the MERN stack.',
+      linkedin: 'https://www.linkedin.com/in/dinesh-shah-02b10921b/',
     },
     {
       id: 4,
-      name: 'David Kim',
-      role: 'Frontend Developer at Netflix',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=DK',
-      content: 'The React course was exactly what I needed to level up my frontend skills. Now I am working on exciting projects at Netflix.',
-      rating: 5,
+      name: 'Jitmanew Tyagi',
+      role: 'SDE-2',
+      image: 'Jitmanew.png',
+      bio: 'Software Development Engineer 2 at AstroTalk, with past experience at 6thStreet and Pepcoding, specializing in scalable backend systems, financial services, and user retention solutions.',
+      linkedin: 'https://www.linkedin.com/in/jitmanew-tyagi/',
     },
     {
       id: 5,
-      name: 'Lisa Wang',
-      role: 'Cloud Engineer at Microsoft',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=LW',
-      content: 'The AWS certification course was thorough and practical. It helped me secure my dream job at Microsoft.',
-      rating: 5,
+      name: 'Mustansir Nisar',
+      role: 'AI & Machine Learning Expert',
+      image: 'mustansir.jpg',
+      bio: 'Artificial Intelligence and Machine Learning Researcher with 3+ years of experience specializing in AI, ML, and Deep Learning.',
+      linkedin: 'https://www.linkedin.com/in/mustansirnisar',
+    }
+  ,
+    {
+      id: 6,
+      name: 'Shivendu Tyagi',
+      role: 'Developer',
+      image: 'Shivendu.png',
+      bio: 'Developer at Brevo with 3.5 years of teaching experience, a strong foundation in DSA, and a career journey from QA to software development.',
+      linkedin: 'https://www.linkedin.com/in/shivendu-tyagi/',
     },
+    {
+      id: 7,
+      name: 'Divya Goyal',
+      role: 'MERN Stack Instructor',
+      image: 'divya.jpg',
+      bio: 'Experienced MERN Stack developer and mentor passionate about building scalable web applications.',
+      linkedin: 'https://www.linkedin.com/in/divya-goyal/', // Replace with actual LinkedIn URL if available
+    },
+    {
+      id: 8,
+      name: 'Ankit Prajapati',
+      role: 'DSA Instructor',
+      image: 'AnkitP.png',
+      bio: 'Skilled in Data Structures & Algorithms with a strong background in problem solving and teaching.',
+      linkedin: 'https://www.linkedin.com/in/ankit-prajapati/', // Replace with actual LinkedIn URL if available
+    },
+    {
+      id: 9,
+      name: 'Akash Singh',
+      role: 'DSA Instructor',
+      image: 'akash.jpeg',
+      bio: 'Passionate about competitive programming and teaching core computer science fundamentals.',
+      linkedin: 'https://www.linkedin.com/in/akash-singh-b18153120/', // Replace with actual LinkedIn URL if available
+    },
+    {
+      id: 10,
+      name: 'Rishabh Shukla',
+      role: 'DSA Instructor',
+      image: 'rishabh.jpg',
+      bio: 'Expert in algorithmic thinking with a focus on helping students crack coding interviews.',
+      linkedin: 'https://www.linkedin.com/in/rishabh-shukla/', // Replace with actual LinkedIn URL if available
+    },
+    {
+      id: 11,
+      name: 'Vishnu Mohan Singh',
+      role: 'Java Full Stack Instructor',
+      image: 'vishnu.jpg',
+      bio: 'Proficient Java Full Stack developer and educator with a passion for backend technologies.',
+      linkedin: 'https://www.linkedin.com/in/vishnu-mohan-singh/', // Replace with actual LinkedIn URL if available
+    },
+    {
+      id: 12,
+      name: 'Vikash Tiwary',
+      role: 'Java Full Stack Instructor',
+      image: 'vikash.jpg',
+      bio: 'Dedicated full stack Java instructor focused on real-world application and hands-on learning.',
+      linkedin: 'https://www.linkedin.com/in/vikash-tiwary/', // Replace with actual LinkedIn URL if available
+    },    
+    {
+      id: 13,
+      name: 'Shubham Shrivastava',
+      role: 'Software Developer',
+      image: 'Shubham.png',
+      bio: 'Software Developer at Extramarks with 10+ years of diverse experience across web development, manufacturing operations, and security systems, skilled in MERN stack, Django, and agile methodologies.',
+      linkedin: 'https://www.linkedin.com/in/shivendu-tyagi/', // Note: This LinkedIn is duplicated from Shivendu; you may want to update it.
+    }
   ];
 
-  const partnerTestimonials = [
-    {
-      id: 1,
-      name: 'TechCorp Solutions',
-      role: 'Enterprise Partner',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=TC',
-      content: 'Lamicons has been instrumental in upskilling our engineering team. Their custom training programs are top-notch.',
-      website: 'https://techcorp.com',
-    },
-    {
-      id: 2,
-      name: 'InnovateTech',
-      role: 'Training Partner',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=IT',
-      content: 'The quality of talent from Lamicons is exceptional. They have become our go-to partner for technical hiring.',
-      website: 'https://innovatetech.com',
-    },
-    {
-      id: 3,
-      name: 'Global Systems Inc',
-      role: 'Corporate Partner',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=GS',
-      content: 'Partnering with Lamicons has significantly reduced our training costs while improving outcomes.',
-      website: 'https://globalsystems.com',
-    },
-    {
-      id: 4,
-      name: 'Future Dynamics',
-      role: 'Strategic Partner',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=FD',
-      content: 'The customized learning paths and industry-focused curriculum have helped us maintain our competitive edge.',
-      website: 'https://futuredynamics.com',
-    },
-    {
-      id: 5,
-      name: 'Tech Innovators Ltd',
-      role: 'Education Partner',
-      image: 'https://placehold.co/400x400/4F46E5/FFFFFF/png?text=TI',
-      content: 'Lamicons provides the perfect blend of theoretical knowledge and practical skills our industry demands.',
-      website: 'https://techinnovators.com',
-    },
-  ];
-
-  const [studentScrollContainer, setStudentScrollContainer] = React.useState(null);
-  const [partnerScrollContainer, setPartnerScrollContainer] = React.useState(null);
+  const [teamScrollContainer, setTeamScrollContainer] = React.useState(null);
 
   const scroll = (direction, container) => {
     if (container) {
@@ -255,8 +277,116 @@ const About = () => {
         </div>
       </section>
 
-      {/* Highlights Section */}
+     
+
+      {/* Highlights Section
       <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:text-center mb-12">
+            <h2 className="text-base text-red-600 font-semibold tracking-wide uppercase">Why Choose Us</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Key Highlights
+            </p>
+          </div>
+          <div className="mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {highlights.map((highlight, index) => (
+                <motion.div
+                  key={highlight.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2, duration: 0.8 }}
+                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div className="mb-4">{highlight.icon}</div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">{highlight.title}</h3>
+                  <p className="text-base text-gray-500">{highlight.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section> */}
+
+      {/* Our Team Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16">
+            <div className="lg:text-center mb-12">
+              <h2 className="text-base text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-semibold tracking-wide uppercase">Meet Our Team</h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                The People Behind Lamicons
+              </p>
+              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                Get to know the passionate individuals driving our mission to revolutionize tech education.
+              </p>
+            </div>
+
+            <div className="relative group">
+              <button
+                onClick={() => scroll('left', teamScrollContainer)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                aria-label="Scroll left"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => scroll('right', teamScrollContainer)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                aria-label="Scroll right"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <div ref={el => setTeamScrollContainer(el)} className="flex overflow-x-auto space-x-8 pb-8 hide-scrollbar">
+                {teamMembers.map((member) => (
+                  <div
+                    key={member.id}
+                    className="flex-none w-80 bg-white rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                  >
+                    <div className="p-6 text-center">
+                      <div className="mb-4">
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="w-24 h-24 mx-auto rounded-full border-4 border-red-100 shadow-lg"
+                        />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                      <p className="text-red-600 font-medium mb-3">{member.role}</p>
+                      <p className="text-gray-600 mb-4 text-sm">{member.bio}</p>
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors"
+                        >
+                          LinkedIn
+                          <svg
+                            className="ml-2 -mr-1 w-4 h-4"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                           <path fillRule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.205v4.25h-2.666V7.33h2.55v1.17h.035c.358-.678 1.225-1.387 2.52-1.387 2.695 0 3.193 1.773 3.193 4.079v4.667zM5.337 7.33H2.67v9.008h2.667V7.33zM4.002 6.354a1.348 1.348 0 110-2.696 1.348 1.348 0 010 2.696z" clipRule="evenodd" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+       {/* Highlights Section */}
+       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center mb-12">
             <h2 className="text-base text-red-600 font-semibold tracking-wide uppercase">Our Mission</h2>
@@ -326,181 +456,6 @@ const About = () => {
             </motion.div>
           </div>
         </div>
-      </section>
-
-      {/* Highlights Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:text-center mb-12">
-            <h2 className="text-base text-red-600 font-semibold tracking-wide uppercase">Why Choose Us</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Key Highlights
-            </p>
-          </div>
-          <div className="mt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {highlights.map((highlight, index) => (
-                <motion.div
-                  key={highlight.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.8 }}
-                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="mb-4">{highlight.icon}</div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">{highlight.title}</h3>
-                  <p className="text-base text-gray-500">{highlight.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Student Testimonials */}
-          <div className="mb-16">
-            <div className="lg:text-center mb-12">
-              <h2 className="text-base text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-semibold tracking-wide uppercase">Success Stories</h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                What Our Students Say
-              </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                Hear from our successful graduates who have transformed their careers through our programs.
-              </p>
-            </div>
-
-            <div className="relative group">
-              <button
-                onClick={() => scroll('left', studentScrollContainer)}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                aria-label="Scroll left"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <button
-                onClick={() => scroll('right', studentScrollContainer)}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                aria-label="Scroll right"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <div ref={el => setStudentScrollContainer(el)} className="flex overflow-x-auto space-x-8 pb-8 hide-scrollbar">
-                {studentTestimonials.map((testimonial) => (
-                  <div
-                    key={testimonial.id}
-                    className="flex-none w-80 bg-white rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                  >
-                    <div className="p-6 text-center">
-                      <div className="mb-4">
-                        <img
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="w-24 h-24 mx-auto rounded-full border-4 border-red-100 shadow-lg"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{testimonial.name}</h3>
-                      <p className="text-red-600 font-medium mb-3">{testimonial.role}</p>
-                      <p className="text-gray-600 mb-4 text-sm italic">"{testimonial.content}"</p>
-                      <div className="flex items-center justify-center">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Partner Testimonials */}
-          <div>
-            <div className="lg:text-center mb-12">
-              <h2 className="text-base text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-semibold tracking-wide uppercase">Trusted Partners</h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                What Our Partners Say
-              </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                Leading companies trust Lamicons to upskill their teams and hire top tech talent.
-              </p>
-            </div>
-
-            <div className="relative group">
-              <button
-                onClick={() => scroll('left', partnerScrollContainer)}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                aria-label="Scroll left"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <button
-                onClick={() => scroll('right', partnerScrollContainer)}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-red-600/30 hover:bg-red-600/50 text-white p-2 rounded-full transform translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                aria-label="Scroll right"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <div ref={el => setPartnerScrollContainer(el)} className="flex overflow-x-auto space-x-8 pb-8 hide-scrollbar">
-                {partnerTestimonials.map((partner) => (
-                  <div
-                    key={partner.id}
-                    className="flex-none w-80 bg-white rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                  >
-                    <div className="p-6 text-center">
-                      <div className="mb-4">
-                        <img
-                          src={partner.image}
-                          alt={partner.name}
-                          className="w-24 h-24 mx-auto rounded-full border-4 border-red-100 shadow-lg"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{partner.name}</h3>
-                      <p className="text-red-600 font-medium mb-3">{partner.role}</p>
-                      <p className="text-gray-600 mb-4 text-sm italic">"{partner.content}"</p>
-                      <a
-                        href={partner.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors"
-                      >
-                        Visit Website
-                        <svg
-                          className="ml-2 -mr-1 w-4 h-4"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
       </section>
     </div>
   );
