@@ -79,7 +79,7 @@ const Contact = () => {
                   <div className="flex items-start space-x-4">
                     <MapPinIcon className="w-6 h-6 text-red-200" />
                     <div>
-                      <p className="text-white font-medium">Our Location</p>
+                      
                       <p className="text-red-100">Lamicons Private Limited Jalandhar</p>
                     </div>
                   </div>
