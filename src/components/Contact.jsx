@@ -80,7 +80,7 @@ const Contact = () => {
                     <MapPinIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Our Location</p>
-                      <p className="text-red-100">123 Business Avenue, New York, NY 10001</p>
+                      <p className="text-red-100">Lamicons Private Limited Jalandhar</p>
                     </div>
                   </div>
 
@@ -88,7 +88,7 @@ const Contact = () => {
                     <PhoneIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Phone Number</p>
-                      <p className="text-red-100">+1 (555) 123-4567</p>
+                      <p className="text-red-100">+91 7006 525 041</p>
                     </div>
                   </div>
 
@@ -96,7 +96,7 @@ const Contact = () => {
                     <EnvelopeIcon className="w-6 h-6 text-red-200" />
                     <div>
                       <p className="text-white font-medium">Email Address</p>
-                      <p className="text-red-100">contact@lamicons.com</p>
+                      <p className="text-red-100">info@lamicons.com</p>
                     </div>
                   </div>
                 </div>
